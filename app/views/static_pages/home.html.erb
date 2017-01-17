@@ -1,5 +1,16 @@
 <h1>StaticPages#home</h1>
-<p>Find me in app/views/static_pages/home.html.erb</p>
 
+<%=form_tag "/static_pages/search" do %>
+	<%=label_tag (:location)%>
+    <%=text_field_tag (:location)%>
+    <%=submit_tag ("search")%>
+<% end %>
+<% if @responses %>
+<% for i in (0..5)%>
+	<div>
+		<%= @responses.businesses[i].name %></br>
+		<img src=<%=@responses.businesses[i].image_url%>>
+	</div>
+	<% end %>
+<% end %>
 
-<%= @response.businesses[1].name %>
