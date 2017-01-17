@@ -5,5 +5,14 @@
 <%= @user.email %>
 <%= @user.username %>
 <%= @user.created_at %>
+<br>
 
-<%= @user.events %>
+<h1>Events</h1>
+<% current_user.events.each do |event| %>
+ 	<%= event.name %>
+ 	<%= event.description%>
+ 	<%= event.location %>
+
+ <% end %>
+
+
