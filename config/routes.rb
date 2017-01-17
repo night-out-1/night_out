@@ -8,7 +8,9 @@ Rails.application.routes.draw do
 
 	resources :events	
 
+	post 'static_pages/search'
 
+  get 'static_pages/search' => 'static_pages#home'
 
   get 'static_pages/home'
 

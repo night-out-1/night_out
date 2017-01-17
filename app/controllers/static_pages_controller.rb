@@ -12,5 +12,14 @@ class StaticPagesController < ApplicationController
   def contact
   end
 
+  def search
+	@responses = Yelp.client.search(params[:location])
+	render static_pages_home_path
+  end
+
+
+private
+
+
 
 end
