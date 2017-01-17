@@ -14,7 +14,7 @@
 
     <% if current_user %>
   		<%= link_to('Logout', destroy_user_session_path, :method => :delete) %>
-		<%= link_to("/profiles/#{@user.id}", :method => :get) do %>
+		<%= link_to("/profiles/#{current_user.id}", :method => :get) do %>
 		Profile
 		<% end %>
 	<% end %>
