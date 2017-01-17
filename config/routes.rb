@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
 
+  get 'profiles/index'
+
+  get 'profiles/show'
+
 	resources :comments
 
 	devise_for :users, :controllers => { registrations: 'registrations' }
@@ -8,7 +12,11 @@ Rails.application.routes.draw do
 
 	resources :events	
 
+
 	post 'static_pages/search'
+
+  resources :profiles
+
 
   get 'static_pages/search' => 'static_pages#home'
 
