@@ -16,7 +16,11 @@ class CommentsController < ApplicationController
 
 	def create
 		@comment = Comment.new(comment_params)
+		@comment.user_id = current_user.id
+		# @comment.event_id = 
 		# redirect_to
+		
+		# Currently, this does not get the event_id and therefore does not create a comment.
 	end
 
 	def edit
