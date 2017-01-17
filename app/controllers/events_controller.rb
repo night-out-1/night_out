@@ -8,6 +8,7 @@ class EventsController < ApplicationController
 	end
 
 	def show
+		@creator_name = (User.find_by id: @event.creator).username
 	end
 
 	def new
@@ -16,7 +17,14 @@ class EventsController < ApplicationController
 
 	def create
 		@event = Event.new(event_params)
-		# redirect_to
+		@event.user_id = current_user.id
+		@event.creator = current_user.id
+
+		if @event.save
+			redirect_to event_path(@event)
+		else
+			render :new
+		end
 	end
 
 	def edit
@@ -24,18 +32,18 @@ class EventsController < ApplicationController
 
 	def update
 		@event.update(event_params)
-		# redirect_to
+		redirect_to event_path(@event)
 	end
 
 	def destroy
 		@event.destroy
-		# redirect_to
+		redirect_to events_path
 	end
 
 	private
 
   def event_params
-    params.require(:event).permit(:user_id, :name, :time, :description, :location)
+    params.require(:event).permit(:user_id, :name, :time, :description, :location, :creator)
   end
 
   def set_event
