@@ -1,5 +1,7 @@
 class StaticPagesController < ApplicationController
   def home
+
+    @user = current_user
   	parameters = { term: params[:term], limit: 16 }
 
     # render json: Yelp.client.search(‘San Francisco’, parameters)
