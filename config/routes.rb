@@ -1,12 +1,18 @@
 Rails.application.routes.draw do
 
 
+  get 'profiles/index'
+
+  get 'profiles/show'
+
 	resources :comments
 
 	devise_for :users, :controllers => { registrations: 'registrations' }
 
 
 	resources :events	
+
+  resources :profiles
 
 
 
