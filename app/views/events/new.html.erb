@@ -1,6 +1,19 @@
 <h2>Create A New Event!</h2>
 
+<h3>Event at <%= @location_name %></br> </h3>
+<img src=<%=@location_photo_url %>>
+<%= @location_street_address %>
+<%= @location_city %>
+<%= @location_url %>
+
+
 <%= form_for @event do |f| %>
+
+	<%= f.hidden_field :location_name, value: "#{@location_name}" %>
+	<%= f.hidden_field :location_street_address, value: "#{@location_street_address}" %>
+	<%= f.hidden_field :location_city, value: "#{@location_city}" %>
+	<%= f.hidden_field :location_photo_url, value: "#{@location_photo_url}" %>
+	<%= f.hidden_field :location_url, value: "#{@location_url}" %>
 	
 	<%= f.label :name, value: "Name: " %>
 	<%= f.text_field :name %><br>
@@ -8,8 +21,11 @@
 	<%= f.label :time, value: "Time: " %>
 	<%= f.text_field :time %><br>
 
-	<%= f.label :location, value: "Location: " %>
-	<%= f.text_field :location %><br>
+	<%= @business_name %>
+
+	<% if @businesses %>
+		<%= @business_name %>
+	<% end %>
 	<!-- Eventually, this location will be pulled from Yelp API -->
 
 	<%= f.label :description, value: "Event Description: " %>

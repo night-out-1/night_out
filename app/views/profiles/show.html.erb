@@ -8,11 +8,16 @@
 <br>
 
 <h1>Events</h1>
-<% current_user.events.each do |event| %>
- 	<%= event.name %>
- 	<%= event.description%>
- 	<%= event.location %>
 
+<% current_user.events.each do |event| %>
+<% url = '/events/' + event.id.to_s %>
+	<%= link_to url do %>
+	 	<%= event.name %>
+	 	<%= event.description%>
+	 	<%= event.location_name %>
+	 	<img src=<%= event.location_photo_url%>>
+	 <% end %>
+	 <a href=<%=event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a>
  <% end %>
 
 

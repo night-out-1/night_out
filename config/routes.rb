@@ -15,10 +15,12 @@ Rails.application.routes.draw do
 
   resources :profiles
 
+get 'events/search' => 'events#index'
+
+post 'events/search'
 
 
-
-
+post 'events/new'
 	post 'static_pages/search'
 
   resources :profiles

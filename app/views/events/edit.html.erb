@@ -1,5 +1,9 @@
 <h2>Edit Your Event</h2>
 
+<h3><%=@event.location_name%></h3>
+<img src=<%=@event.location_photo_url%>>
+<a href=<%=@event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a>
+
 <%= form_for @event do |f| %>
 	
 	<%= f.label :name, value: "Name: " %>
@@ -8,9 +12,7 @@
 	<%= f.label :time, value: "Time: " %>
 	<%= f.text_field :time %><br>
 
-	<%= f.label :location, value: "Location: " %>
-	<%= f.text_field :location %><br>
-	<!-- Eventually, this location will be pulled from Yelp API -->
+	<!-- Eventually, users will be able to change the location of the event -->
 
 	<%= f.label :description, value: "Event Description: " %>
 	<%= f.text_field :description %><br>
