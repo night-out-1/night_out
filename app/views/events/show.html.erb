@@ -18,6 +18,9 @@
 	</div>
 <% end %>
 
+<%= button_to "I wanna join this event!", action: "add_user_to_event" %>
+<!-- This button will work (soon). -->
+
 
 <div class="comment-container">
 	<% @event.comments.each do |comment| %>
