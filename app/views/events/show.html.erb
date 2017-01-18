@@ -20,8 +20,12 @@
 	<% @comments.each do |comment| %>
 		<div class="comment-card">
 			<h4><a href="/comments/<%= comment.id %>"><%= comment.title %></a></h4>
-			<h5>Posted by: <%= @creator_name%></h5>
+			<h5>Posted by: <%= @creator_name %></h5>
 			<p><%= comment.content %></p>
+
+			<% if comment.user_id == current_user.id %>
+				<%= link_to "Edit Comment", edit_comment_path(comment.id) %>
+			<% end %>
 		</div>
 	<% end %>
 	<%= render '/comments/create_new_comment' %>

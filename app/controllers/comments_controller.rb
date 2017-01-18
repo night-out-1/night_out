@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
 
 	before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :except => [:index]
 
 	def index
 		@comments = Comment.all
@@ -28,7 +28,7 @@ class CommentsController < ApplicationController
 
 	def update
 		@comment.update(comment_params)
-		# redirect_to
+		redirect_to event_path(@comment.event)
 	end
 
 	def destroy
