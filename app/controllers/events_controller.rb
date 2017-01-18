@@ -9,6 +9,7 @@ class EventsController < ApplicationController
 
 	def show
 		@creator_name = (User.find_by id: @event.creator).username
+		@comments = Comment.all
 	end
 
 	def new

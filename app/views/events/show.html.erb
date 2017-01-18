@@ -14,5 +14,16 @@
 	<%= link_to "Delete Event", @event, method: :delete, data: { confirm: "Are you sure?" } %>
 </div>
 
-<%= render '/comments/create_new_comment' %>
+
+
+<div class="comment-container">
+	<% @comments.each do |comment| %>
+		<div class="comment-card">
+			<h4><a href="/comments/<%= comment.id %>"><%= comment.title %></a></h4>
+			<h5>Posted by: <%= @creator_name%></h5>
+			<p><%= comment.content %></p>
+		</div>
+	<% end %>
+	<%= render '/comments/create_new_comment' %>
+</div>
 

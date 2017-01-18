@@ -8,6 +8,7 @@ class CommentsController < ApplicationController
 	end
 
 	def show
+		@creator_name = (User.find_by id: @comment.user_id).username
 	end
 
 	def new
@@ -17,10 +18,9 @@ class CommentsController < ApplicationController
 	def create
 		@comment = Comment.new(comment_params)
 		@comment.user_id = current_user.id
-		# @comment.event_id = 
-		# redirect_to
-		
-		# Currently, this does not get the event_id and therefore does not create a comment.
+
+		@comment.save
+		redirect_to event_path(@comment.event)
 	end
 
 	def edit

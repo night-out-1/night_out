@@ -1,6 +1,8 @@
 <h2>Add your comments:</h2>
 
 <%= form_for Comment.new do |f| %>
+
+	<%= f.hidden_field :event_id, value: @event.id %>
 	
 	<%= f.label :title, value: "Title: " %>
 	<%= f.text_field :title %><br>
