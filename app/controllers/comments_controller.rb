@@ -33,7 +33,7 @@ class CommentsController < ApplicationController
 
 	def destroy
 		@comment.destroy
-		# redirect_to
+		redirect_to event_path(@comment.event)
 	end
 
 	private

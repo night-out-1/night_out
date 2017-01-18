@@ -25,6 +25,7 @@
 
 			<% if comment.user_id == current_user.id %>
 				<%= link_to "Edit Comment", edit_comment_path(comment.id) %>
+				<%= link_to "Delete Comment", comment_path(comment.id), method: :delete, data: { confirm: "Are you sure?" } %>
 			<% end %>
 		</div>
 	<% end %>
