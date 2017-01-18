@@ -12,9 +12,22 @@ Rails.application.routes.draw do
 
 	resources :events	
 
+
+  resources :profiles
+
+get 'events/search' => 'events#index'
+
+post 'events/search'
+post 'events/add_user_to_event' => 'events#add_user_to_event'
+
+post 'events/new'
+	post 'static_pages/search'
+
   resources :profiles
 
 
+
+  get 'static_pages/search' => 'static_pages#home'
 
   get 'static_pages/home'
 

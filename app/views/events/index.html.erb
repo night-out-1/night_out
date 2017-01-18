@@ -1,10 +1,38 @@
 <div class="event-container">
-	<% @events.each do |event| %>
-		<div class="event-card">
-			<h2><a href="/events/<%= event.id %>"><%= event.name %></a></h2>
-			<h3><%= event.location %></h3>
-			<h3><%= event.time %></h3>
-			<p><%= event.description %></p>
-		</div>
+	<%=form_tag "/events/search" do %>
+		<%=label_tag (:location)%>
+		<%=text_field_tag (:location)%>
+		<%=submit_tag ("search")%>
+	<% end %>
+
+
+	<% if @responses %>
+		<% for i in (0..5)%>
+			<div>
+				<%= @responses.businesses[i].name %></br>
+				<img src=<%=@responses.businesses[i].image_url%>>
+			</div>
+			<div>
+				<%= form_tag '/events/new' do%>
+					<%= hidden_field_tag(:location_name, @responses.businesses[i].name)%>
+					<%= hidden_field_tag(:location_photo_url, @responses.businesses[i].image_url)%>
+					<%= hidden_field_tag(:location_url, @responses.businesses[i].url) %>
+					<%= hidden_field_tag(:location_street_address, @responses.businesses[i].location.address)%>
+					<%= hidden_field_tag(:location_city, @responses.businesses[i].location.city)%>
+					<%= submit_tag "Create Event" %>
+				<% end %>
+			</div>
+		<% end %>
+	<% end %>
+
+	<% if @events %>
+		<% @events.each do |event| %>
+			<div class="event-card">
+				<h2><a href="/events/<%= event.id %>"><%= event.name %></a></h2>
+				<h3><%= event.location_name %></h3>
+				<h3><%= event.time %></h3>
+				<p><%= event.description %></p>
+			</div>
+		<% end %>
 	<% end %>
 </div>

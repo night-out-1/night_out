@@ -1,8 +1,8 @@
-<h2>Edit your comment:</h2>
+<h2>Add your comments:</h2>
 
-<%= form_for @comment do |f| %>
+<%= form_for Comment.new do |f| %>
 
-	
+	<%= f.hidden_field :event_id, value: @event.id %>
 	
 	<%= f.label :title, value: "Title: " %>
 	<%= f.text_field :title %><br>
@@ -10,6 +10,6 @@
 	<%= f.label :content, value: "Content: " %>
 	<%= f.text_field :content %><br>
 
-	<%= f.submit "Update Comment" %>
+	<%= f.submit "Add Comment" %>
 
 <% end %>

@@ -1,13 +1,14 @@
 class CommentsController < ApplicationController
 
 	before_action :set_comment, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :except => [:index]
 
 	def index
 		@comments = Comment.all
 	end
 
 	def show
+		@creator_name = (User.find_by id: @comment.user_id).username
 	end
 
 	def new
@@ -16,7 +17,10 @@ class CommentsController < ApplicationController
 
 	def create
 		@comment = Comment.new(comment_params)
-		# redirect_to
+		@comment.user_id = current_user.id
+
+		@comment.save
+		redirect_to event_path(@comment.event)
 	end
 
 	def edit
@@ -24,12 +28,12 @@ class CommentsController < ApplicationController
 
 	def update
 		@comment.update(comment_params)
-		# redirect_to
+		redirect_to event_path(@comment.event)
 	end
 
 	def destroy
 		@comment.destroy
-		# redirect_to
+		redirect_to event_path(@comment.event)
 	end
 
 	private

@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
 
-	before_action :set_event, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
+	before_action :set_event, only: [:show, :edit, :update, :destroy, :add_user_to_event]
+  before_action :authenticate_user!, :except => [:index]
 
 	def index
 		@events = Event.all
@@ -9,10 +9,27 @@ class EventsController < ApplicationController
 
 	def show
 		@creator_name = (User.find_by id: @event.creator).username
+		@comments = Comment.all
+
 	end
 
 	def new
+		@location_name = params[:location_name]
+		@location_street_address = params[:location_street_address]
+		@location_city= params[:location_city]
+		@location_photo_url= params[:location_photo_url]
+		@location_url= params[:location_url]
 		@event = Event.new
+		@event.location_name = @location_name
+		@event.location_street_address = @location_street_address
+		@event.location_city = @location_city
+		@event.location_photo_url = @location_photo_url
+		@event.location_url = @location_url
+		@event.creator = current_user.id
+		@event.user_id = current_user.id
+		@event.save
+		current_user.events.push(@event)
+
 	end
 
 	def create
@@ -21,6 +38,7 @@ class EventsController < ApplicationController
 		@event.creator = current_user.id
 
 		if @event.save
+			current_user.events.push(@event)
 			redirect_to event_path(@event)
 			current_user.events.push(@event)
 		else
@@ -39,6 +57,16 @@ class EventsController < ApplicationController
 	def destroy
 		@event.destroy
 		redirect_to events_path
+	end
+
+	def search
+		@responses = Yelp.client.search(params[:location])
+		render :index
+	end
+
+	def add_user_to_event
+		@event.users.push(current_user)
+		redirect_to event_path(@event)
 	end
 
 	private

@@ -1,16 +1,44 @@
 <div class="event-card">
 	<h2><%= @event.name %></h2>
-	<p>Created by <%= @creator_name %></p>
-	<h3><%= @event.location %></h3>
-	<h3><%= @event.time %></h3>
+	<img src=<%=@event.location_photo_url%>>
+	<h3><%= @event.location_name %></h3>
+	<h4><%= @event.location_street_address%></h4>
+	<h4><%= @event.location_city%></h4>
+	<a href=<%=@event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a>
+	<h3>Time: <%= @event.time %></h3>
 	<p><%= @event.description %></p>
 </div>
 
+<% if @event.user_id == current_user.id %>
+	<div>
+		<%= link_to "Edit Event", edit_event_path %>	
+	</div>
+	<div>
+		<%= link_to "Delete Event", @event, method: :delete, data: { confirm: "Are you sure?" } %>
+	</div>
+<% end %>
 
-<div>
-	<%= link_to "Edit Event", edit_event_path %>	
-</div>
-<div>
-	<%= link_to "Delete Event", @event, method: :delete, data: { confirm: "Are you sure?" } %>	
+<%= button_to "I wanna join this event!", action: "add_user_to_event" %>
+<!-- This button will work (soon). -->
+
+
+<div class="comment-container">
+	<% @event.comments.each do |comment| %>
+		<div class="comment-card">
+			<h4><a href="/comments/<%= comment.id %>"><%= comment.title %></a></h4>
+			<h5>Posted by: <%= (User.find_by id: comment.user_id).username %></h5>
+			<p><%= comment.content %></p>
+
+			<% if comment.user_id == current_user.id %>
+				<div>
+					<%= link_to "Edit Comment", edit_comment_path(comment.id) %>
+				</div>
+				<div>
+					<%= link_to "Delete Comment", comment_path(comment.id), method: :delete, data: { confirm: "Are you sure?" } %>
+				</div>
+			<% end %>
+		</div>
+	<% end %>
+	<%= render '/comments/create_new_comment' %>
 </div>
 
