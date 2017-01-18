@@ -18,8 +18,19 @@
 	</div>
 <% end %>
 
-<%= button_to "I wanna join this event!", action: "add_user_to_event" %>
-<!-- This button will work (soon). -->
+
+<% if @event.users.exclude? current_user %>
+	<%= button_to "I wanna join this event!", action: "add_user_to_event", id: @event.id %>
+<% end %>
+
+<div class="user-container">
+	<h4><%= @event.users.length %> people near you are attending this event!</h4>
+		<% @event.users.each do |user| %>
+			<div class="user-card">
+				<p><%= user.username %></p>
+				<!-- Add user avatar here as well. -->
+		<% end %>
+</div>
 
 
 <div class="comment-container">
