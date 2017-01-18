@@ -8,7 +8,7 @@ class EventsController < ApplicationController
 	end
 
 	def show
-		@creator_name = (User.find_by id: @event.creator).username
+
 	end
 
 	def new
@@ -23,7 +23,10 @@ class EventsController < ApplicationController
 		@event.location_city = @location_city
 		@event.location_photo_url = @location_photo_url
 		@event.location_url = @location_url
+		@event.creator = current_user.id
+		@event.user_id = current_user.id
 		@event.save
+		current_user.events.push(@event)
 
 	end
 
