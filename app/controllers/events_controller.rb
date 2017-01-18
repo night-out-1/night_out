@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
 
-	before_action :set_event, only: [:show, :edit, :update, :destroy]
+	before_action :set_event, only: [:show, :edit, :update, :destroy, :add_user_to_event]
   before_action :authenticate_user!, :except => [:index]
 
 	def index
@@ -62,6 +62,11 @@ class EventsController < ApplicationController
 	def search
 		@responses = Yelp.client.search(params[:location])
 		render :index
+	end
+
+	def add_user_to_event
+		@event.users.push(current_user)
+		redirect_to event_path(@event)
 	end
 
 	private
