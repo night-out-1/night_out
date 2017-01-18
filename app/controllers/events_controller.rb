@@ -12,7 +12,19 @@ class EventsController < ApplicationController
 	end
 
 	def new
+		@location_name = params[:location_name]
+		@location_street_address = params[:location_street_address]
+		@location_city= params[:location_city]
+		@location_photo_url= params[:location_photo_url]
+		@location_url= params[:location_url]
 		@event = Event.new
+		@event.location_name = @location_name
+		@event.location_street_address = @location_street_address
+		@event.location_city = @location_city
+		@event.location_photo_url = @location_photo_url
+		@event.location_url = @location_url
+		@event.save
+
 	end
 
 	def create
@@ -40,6 +52,11 @@ class EventsController < ApplicationController
 	def destroy
 		@event.destroy
 		redirect_to events_path
+	end
+
+	def search
+		@responses = Yelp.client.search(params[:location])
+		render :index
 	end
 
 	private
