@@ -5,6 +5,13 @@ class EventsController < ApplicationController
 
 	def index
 		@events = Event.all
+		if current_user
+      		@user = User.find(current_user.id)
+      		@search = @user.postal_code
+      		@base_locations = Yelp.client.search(@search)
+    	else
+      		@base_locations = Yelp.client.search("Philadelphia")
+    	end
 	end
 
 	def show
@@ -19,12 +26,14 @@ class EventsController < ApplicationController
 		@location_city= params[:location_city]
 		@location_photo_url= params[:location_photo_url]
 		@location_url= params[:location_url]
+		@location_postal_code = params[:location_postal_code]
 		@event = Event.new
 		@event.location_name = @location_name
 		@event.location_street_address = @location_street_address
 		@event.location_city = @location_city
 		@event.location_photo_url = @location_photo_url
 		@event.location_url = @location_url
+		@event.location_postal_code = @location_postal_code
 		@event.creator = current_user.id
 		@event.user_id = current_user.id
 		@event.save
@@ -61,6 +70,7 @@ class EventsController < ApplicationController
 
 	def search
 		@responses = Yelp.client.search(params[:location])
+		@events = Event.all
 		render :index
 	end
 

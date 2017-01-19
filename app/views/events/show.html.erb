@@ -24,7 +24,11 @@
 <% end %>
 
 <div class="user-container">
-	<h4><%= @event.users.length %> people near you are attending this event!</h4>
+	<% if @event.users.length == 1%>
+		<h4><%= @event.users.length %> person near you is attending this event!</h4>
+	<% else %>
+		<h4><%= @event.users.length %> people near you are attending this event!</h4>
+	<% end %>
 		<% @event.users.each do |user| %>
 			<div class="user-card">
 				<p><%= user.username %></p>

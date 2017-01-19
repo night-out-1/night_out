@@ -1,16 +1,13 @@
 <h1>StaticPages#home</h1>
 
-<%=form_tag "/static_pages/search" do %>
-	<%=label_tag (:location)%>
-    <%=text_field_tag (:location)%>
-    <%=submit_tag ("search")%>
+<!-- This code shows the latitude and longitude of the location of the device. It is not currently used to populate a search of restaurants, but eventually can be when the lat and long are able to be converted to zip code... -->
+<p id="demo"></p>
+<% if current_user %>
+<script>
+ var current_user_id = <%= current_user.id.to_s %>;
+</script>
 <% end %>
-<% if @responses %>
-<% for i in (0..5)%>
-	<div>
-		<%= @responses.businesses[i].name %></br>
-		<img src=<%=@responses.businesses[i].image_url%>>
-	</div>
-	<% end %>
-<% end %>
+<!-- ...this ends that code -->
+
+
 
