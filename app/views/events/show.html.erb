@@ -21,6 +21,8 @@
 
 <% if @event.users.exclude? current_user %>
 	<%= button_to "I wanna join this event!", action: "add_user_to_event", id: @event.id %>
+<% elsif @event.users.include? current_user %>
+	<%= button_to "I can't make it to this event anymore.", action: "remove_user_from_event", id: @event.id %>
 <% end %>
 
 <div class="user-container">

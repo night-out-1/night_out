@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
 
-	before_action :set_event, only: [:show, :edit, :update, :destroy, :add_user_to_event]
+	before_action :set_event, only: [:show, :edit, :update, :destroy, :add_user_to_event, :remove_user_from_event]
   before_action :authenticate_user!, :except => [:index]
 
 	def index
@@ -76,6 +76,11 @@ class EventsController < ApplicationController
 
 	def add_user_to_event
 		@event.users.push(current_user)
+		redirect_to event_path(@event)
+	end
+
+	def remove_user_from_event
+		@event.users.delete(current_user)
 		redirect_to event_path(@event)
 	end
 
