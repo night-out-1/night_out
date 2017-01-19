@@ -2,6 +2,18 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+  .jumbotron {
+    background: none;
+    margin-top: 50px;
+  }
+
+  .fadeIn {
+  	opacity: 0;
+  }
+
+
+
   .bg-1 { 
       background-image: url('nightout2.jpg'); 
       background-repeat: no-repeat;
@@ -10,5 +22,44 @@
 
       height: 100%;
       width: 100%;
+      color: #fff;
+
+      .glyphicon {
+      	color: red;
+      }
+  }
+
+    .bg-3 { 
+      background-color: #ffffff; 
+      color: #555555;
+      background-size: 400px;
+      height: 100%;
+      padding-top: 0;
+      
+  }
+
+
+
+    .bg-4 { 
+      background-image: url('nightout.jpg'); 
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-attachment: fixed;
+
+      height: 100%;
+      width: 100%;
       color: #ffffff;
+
+      .glyphicon {
+      	font-size: 200px;
+      }
+
+      p {
+      	font-size: 26px;
+      }
+  }
+
+
+  .glyphicon {
+  	color: #fff;
   }

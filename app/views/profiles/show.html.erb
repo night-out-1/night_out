@@ -1,23 +1,28 @@
-<h1>Profiles#show</h1>
-<p>Find me in app/views/profiles/show.html.erb</p>
+<div class="container">
+
+	<h1>Profiles#show</h1>
+	<p>Find me in app/views/profiles/show.html.erb</p>
 
 
-<%= @user.email %>
-<%= @user.username %>
-<%= @user.created_at %>
-<br>
+	<%= @user.email %>
+	<%= @user.username %>
+	<%= @user.created_at %>
+	<br>
 
-<h1>Events</h1>
+	<h1>Events</h1>
 
-<% current_user.events.each do |event| %>
-<% url = '/events/' + event.id.to_s %>
-	<%= link_to url do %>
-	 	<%= event.name %>
-	 	<%= event.description%>
-	 	<%= event.location_name %>
-	 	<img src=<%= event.location_photo_url%>>
+	<% current_user.events.each do |event| %>
+	<% url = '/events/' + event.id.to_s %>
+		<%= link_to url do %>
+		 	<%= event.name %><br>
+		 	<%= event.description%><br>
+		 	<%= event.location_name %><br>
+		 	<img src=<%= event.location_photo_url%>><br>
+		 <% end %>
+		 <a href=<%=event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a><br>
 	 <% end %>
-	 <a href=<%=event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a>
- <% end %>
+
+
+</div>
 
 
