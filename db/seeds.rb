@@ -5,9 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-user1 = User.create(username: "Chris", email: "chris@chris.com", password: "password", postal_code: "19085")
+user1 = User.create(username: "Chris", email: "chris@chris.com", password: "password", postal_code: "19085", admin: false)
 
-user2 = User.create(username: "Shawn", email: "shawn@shawn.com", password: "password", postal_code: "19341")
+user2 = User.create(username: "Shawn", email: "shawn@shawn.com", password: "password", postal_code: "19341", admin: false)
+
+user3 = User.create(username: "Constance", email: "constance@constance.com", password: "password", postal_code: "19119", admin: true)
 
 event1 = Event.create(name: "Let's Get a Drink!", time: "9pm", description: "It's a depressing week with the cold and the holidays being over.  Let's just get together for a drink at Tortilleria's and chill.", user_id: 1, creator: 1, location_name: "Tortilleria San Roman", location_photo_url: "https://s3-media2.fl.yelpcdn.com/bphoto/X9oI1Iz-xwClzzIHTSQlSA/ms.jpg", location_url: "https://www.yelp.com/biz/tortilleria-san-roman-philadelphia?adjust_creative=bdo9TqUzvSfofw8SE33K3A&utm_campaign=yelp_api&utm_medium=api_v2_search&utm_source=bdo9TqUzvSfofw8SE33K3A", location_street_address: "951 S 9th St", location_city: "Philadelphia", location_postal_code: "19085")
 
