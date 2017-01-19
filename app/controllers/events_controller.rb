@@ -84,6 +84,13 @@ class EventsController < ApplicationController
 		redirect_to event_path(@event)
 	end
 
+	def admin_remove_user_from_event
+		@event = Event.find(params[:event][:event_id])
+		@event.users.delete(User.find(params[:event][:user_id]))
+		redirect_to event_path(@event)
+	  flash[:notice] = "User deleted."
+	end
+
 	private
 
   def event_params
