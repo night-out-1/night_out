@@ -2,7 +2,15 @@
 
 	<div class="container-fluid bg-1 text-left">
 	<div class="jumbotron">
-	    <h1 class="text-center">What are you doing tonight?</h1> 
+	    <h1 class="text-center">What are you doing tonight?</h1>
+	    <!-- This code shows the latitude and longitude of the location of the device. It is not currently used to populate a search of restaurants, but eventually can be when the lat and long are able to be converted to zip code... -->
+		<p id="demo"></p>
+		<% if current_user %>
+			<script>
+ 				var current_user_id = <%= current_user.id.to_s %>;
+			</script>
+		<% end %> 
+		<!-- ...this ends that code -->
 	    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A magnam pariatur, sapiente voluptate laboriosam accusantium totam in dolor mollitia quam facere libero eligendi non accusamus porro quod laborum, rem necessitatibus!</p> 
 	    <center>
 	    <a href="/users/sign_up" class="btn btn-default btn-lg">
@@ -55,6 +63,7 @@
 
 
 <!-- content 3 -->
+
 
 
 

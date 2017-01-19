@@ -1,16 +1,20 @@
+
 <div class="container event-container">
+	<h2>CHANGE YOUR LOCATION</h2>
+
 	<%=form_tag "/events/search" do %>
 		<%=label_tag (:location)%>
 		<%=text_field_tag (:location)%>
 		<%=submit_tag ("search")%>
 	<% end %>
 
+	<h2> MAKE A NEW EVENT </h2>
 
 	<% if @responses %>
 		<% for i in (0..5)%>
 			<div>
+				<img src=<%=@responses.businesses[i].image_url%>></br>
 				<%= @responses.businesses[i].name %></br>
-				<img src=<%=@responses.businesses[i].image_url%>>
 			</div>
 			<div>
 				<%= form_tag '/events/new' do%>
@@ -19,20 +23,44 @@
 					<%= hidden_field_tag(:location_url, @responses.businesses[i].url) %>
 					<%= hidden_field_tag(:location_street_address, @responses.businesses[i].location.address)%>
 					<%= hidden_field_tag(:location_city, @responses.businesses[i].location.city)%>
+					<%= hidden_field_tag(:location_postal_code, @responses.businesses[i].location.postal_code)%>
 					<%= submit_tag "Create Event" %>
 				<% end %>
 			</div>
 		<% end %>
+		<% else %>
+			<% for i in (0..5)%>
+				<div>
+					<img src=<%=@base_locations.businesses[i].image_url%>></br>
+					<%= @base_locations.businesses[i].name %></br>
+				</div>
+				<div>
+					<%= form_tag '/events/new' do%>
+					<%= hidden_field_tag(:location_name, @base_locations.businesses[i].name)%>
+					<%= hidden_field_tag(:location_photo_url, @base_locations.businesses[i].image_url)%>
+					<%= hidden_field_tag(:location_url, @base_locations.businesses[i].url) %>
+					<%= hidden_field_tag(:location_street_address, @base_locations.businesses[i].location.address)%>
+					<%= hidden_field_tag(:location_city, @base_locations.businesses[i].location.city)%>
+					<%= hidden_field_tag(:location_postal_code, @base_locations.businesses[i].location.postal_code)%>
+					<%= submit_tag "Create Event" %>
+				<% end %>
+			</div>
+			<% end %>
 	<% end %>
+
+	<h2>EVENTS HAPPENING</h2>
 
 	<% if @events %>
 		<% @events.each do |event| %>
 			<div class="event-card">
-				<h2><a href="/events/<%= event.id %>"><%= event.name %></a></h2>
-				<h3><%= event.location_name %></h3>
-				<h3><%= event.time %></h3>
+				<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
+				<h4><%= event.location_name %></h4>
+				<h4><%= event.time %></h4>
 				<p><%= event.description %></p>
 			</div>
 		<% end %>
 	<% end %>
 </div>
+
+
+
