@@ -12,10 +12,11 @@
 	<% url = '/events/' + event.id.to_s %>
 		<%= link_to url do %>
 		 	<%= event.name %><br>
+	 	<% end %>
 		 	<%= event.description%><br>
 		 	<%= event.location_name %><br>
 		 	<img src=<%= event.location_photo_url%>><br>
-		 <% end %>
+		 
 		 <a href=<%=event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a><br>
 	 <% end %>
 
