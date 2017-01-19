@@ -54,7 +54,7 @@
 			<% end %>
 		</div>
 	<% end %>
-	<% if @event.users.include? current_user %>
+	<% if @event.users.include? current_user || current_user.admin %>
 		<%= render '/comments/create_new_comment' %>
 	<% end %>
 </div>
