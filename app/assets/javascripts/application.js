@@ -68,19 +68,19 @@ function showPosition(position) {
 	latitude_max = latitude + 7;
  	console.log(longitude, latitude);
  	var test = document.createElement("DIV")
- 	var text = document.createTextNode(events_son.busines);
+ 	var text = document.createTextNode(events);
  	test.appendChild(text)
  	var event_container = document.getElementsByClassName("event-container")[0]
  	event_container.appendChild(test)
 
 
 
-	// window.open("localhost:3000//controller/index?latitude_min="+latitude_min+"&latitude_max="+latitude_max,"_self");
-	// console.log(longitude, latitude);
-	// console.log("antes")
-	// showEvents();
-	// console.log("despues");
-	// console.log(latitude_min);
+	window.open("localhost:3000//controller/index?latitude_min="+latitude_min+"&latitude_max="+latitude_max,"_self");
+	console.log(longitude, latitude);
+	console.log("antes")
+	showEvents();
+	console.log("despues");
+	console.log(latitude_min);
 
 }
 
