@@ -50,8 +50,8 @@
 
 	<h2>EVENTS HAPPENING</h2>
 
-	<% if @events %>
-		<% @events.each do |event| %>
+	<% if @base_events %>
+		<% @base_events.each do |event| %>
 			<div class="event-card">
 				<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
 				<h4><%= event.location_name %></h4>
