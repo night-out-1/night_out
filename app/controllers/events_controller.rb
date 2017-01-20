@@ -10,7 +10,13 @@ class EventsController < ApplicationController
       		@search = @user.postal_code
       		@base_locations = Yelp.client.search(@search)
       		@events = Event.all
-      		@events_son = @events.to_json  
+      		@array = []
+      		@events.each do |event|
+      			array = [event.id, event.location_latitude.to_f]
+      			@array.push(array)
+      		end
+
+
     	else
       		@base_locations = Yelp.client.search("Philadelphia")
       		@events = Event.where(location_city:  "Philadelphia")
