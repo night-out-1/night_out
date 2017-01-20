@@ -46,7 +46,7 @@ $(document).ready(function(){
 });
 
 // if you want to run the geolocator, un-commentout the line below and refresh the page and the console will show you the coordinates
-// window.onload = getLocation
+window.onload = getLocation
 
 
 function getLocation() {
@@ -81,5 +81,16 @@ function showError(error) {
     }
 }
 
+
+function getLatLong(){
+	var nearby_ids = [];
+	for (var i=0; i<array.length; i++){
+		var a = array[i][1] - latitude;
+		var b = array[i][2] - longitude;
+		var c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+		if (c < .145){
+			nearby_ids.push(array[i][0]);
+		};
+	};
 
 
