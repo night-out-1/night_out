@@ -48,6 +48,8 @@ $(document).ready(function(){
 // if you want to run the geolocator, un-commentout the line below and refresh the page and the console will show you the coordinates
 window.onload = getLocation
 
+var latitude = "";
+var longitude = "";
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -59,6 +61,8 @@ function getLocation() {
 
 function showPosition(position) {
 	var x = document.getElementById("demo");
+	latitude = position.coords.latitude;
+	longitude = position.coords.longitude;
     console.log("Latitude: " + position.coords.latitude + 
     "  Longitude: " + position.coords.longitude + "  from geolocation in application.js file.")
 }
@@ -92,5 +96,7 @@ function getLatLong(){
 			nearby_ids.push(array[i][0]);
 		};
 	};
+	console.log(nearby_ids);
+}
 
 
