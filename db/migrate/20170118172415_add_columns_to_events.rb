@@ -5,5 +5,7 @@ class AddColumnsToEvents < ActiveRecord::Migration[5.0]
   	add_column :events, :location_url, :string
   	add_column :events, :location_street_address, :string
   	add_column :events, :location_city, :string
+  	add_column :events, :location_latitude, :string
+  	add_column :events, :location_longitude, :string
   end
 end
