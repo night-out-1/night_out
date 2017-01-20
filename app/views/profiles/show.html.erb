@@ -1,26 +1,50 @@
-<div class="container">
 
-	<h1>Profiles#show</h1>
+	<div class="container profile">
+		<div class="row">
+				<div class="col-md-4">
+					<img src='/assets/party1' class='img-responsive'>
+				</div>
 
-	<h2><%= @user.username %></h2>
+				<div class="col-md-8">
+					<% current_user.events.each do |event| %>
+					<% url = '/events/' + event.id.to_s %>
+						<%= link_to url do %>
+						 	<%= event.name %>
+						 	<img src= <%= event.location_photo_url %>>
+					 	<% end %>
+						 
+						 <a href=<%=event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a><br>
+					 <% end %>
 
-	<br>
-
-	<h1>Events</h1>
-
-	<% current_user.events.each do |event| %>
-	<% url = '/events/' + event.id.to_s %>
-		<%= link_to url do %>
-		 	<%= event.name %><br>
-	 	<% end %>
-		 	<%= event.description%><br>
-		 	<%= event.location_name %><br>
-		 	<img src=<%= event.location_photo_url%>><br>
-		 
-		 <a href=<%=event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a><br>
-	 <% end %>
+				</div>
+			</div>
+		</div>
+	
 
 
-</div>
+		<div class="container">
+
+			<h1>Profiles#show</h1>
+
+			<h2><%= @user.username %></h2>
+
+			<br>
+
+			<h1>Events</h1>
+
+			<% current_user.events.each do |event| %>
+			<% url = '/events/' + event.id.to_s %>
+				<%= link_to url do %>
+				 	<%= event.name %><br>
+			 	<% end %>
+				 	<%= event.description%><br>
+				 	<%= event.location_name %><br>
+				 	<img src=<%= event.location_photo_url%>><br>
+				 
+				 <a href=<%=event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a><br>
+			 <% end %>
+
+
+		</div>
 
 
