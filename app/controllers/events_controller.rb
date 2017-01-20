@@ -9,6 +9,18 @@ class EventsController < ApplicationController
       		@user = User.find(current_user.id)
       		@search = @user.postal_code
       		@base_locations = Yelp.client.search(@search)
+      		zip = @user.postal_code.to_i
+      		max_zip = zip + 150
+      		min_zip = zip - 150
+      		@event_id_array = []
+      		@events.each do |event| 
+      			if event.location_postal_code.to_i > min_zip && event.location_postal_code.to_i < max_zip
+      				@event_id_array.push(event.id)
+      			end
+      		end
+      		for i in [0..@event_id_array.length] do
+      			@base_events = Event.find(@event_id_array[i])
+      		end 
     	else
       		@base_locations = Yelp.client.search("Philadelphia")
     	end
@@ -70,7 +82,19 @@ class EventsController < ApplicationController
 
 	def search
 		@responses = Yelp.client.search(params[:location])
-		@events = Event.all
+		zip = params[:location].to_i
+      	max_zip = zip + 150
+      	min_zip = zip - 150
+   		@events = Event.all
+   		@event_id_array = []
+      	@events.each do |event| 
+      		if event.location_postal_code.to_i > min_zip && event.location_postal_code.to_i < max_zip
+      			@event_id_array.push(event.id)
+      		end
+      	end
+      	for i in [0..@event_id_array.length] do
+      		@base_events = Event.find(@event_id_array[i])
+      	end 
 		render :index
 	end
 
