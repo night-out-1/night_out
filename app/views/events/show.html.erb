@@ -56,6 +56,9 @@
 		<% end %>
 </div>
 
+<a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.referer %>" target="_blank" >
+  Share this event on Facebook
+</a>
 
 <div class="comment-container">
 	<% @event.comments.each do |comment| %>
