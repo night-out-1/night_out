@@ -75,7 +75,8 @@ function showPosition(position) {
 
 
 
-	window.open("localhost:3000//controller/index?latitude_min="+latitude_min+"&latitude_max="+latitude_max,"_self");
+	window.open("localhost:3000//controller/index?latitude_min="+latitude_min+"&latitude_max="+latitude_max,"_about");
+
 	console.log(longitude, latitude);
 	console.log("antes")
 	showEvents();
