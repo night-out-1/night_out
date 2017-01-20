@@ -16,10 +16,19 @@
 						 <a href=<%=event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a><br>
 					 <% end %>
 
+
 				</div>
 			</div>
 		</div>
 	
+
+	<div class="avatar"><%= image_tag @user.avatar.url :original %></div>
+	<div>
+		<%= link_to "Edit Profile", edit_user_registration_path %>	
+	</div>
+
+	<br>
+
 
 
 		<div class="container">

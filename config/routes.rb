@@ -18,7 +18,10 @@ Rails.application.routes.draw do
 get 'events/search' => 'events#index'
 
 post 'events/search'
+
 post 'events/add_user_to_event' => 'events#add_user_to_event'
+post 'events/remove_user_from_event' => 'events#remove_user_from_event'
+post 'events/admin_remove_user_from_event' => 'events#admin_remove_user_from_event'
 
 post 'events/new'
 	post 'static_pages/search'

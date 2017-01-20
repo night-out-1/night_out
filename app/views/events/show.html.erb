@@ -9,7 +9,7 @@
 	<p><%= @event.description %></p>
 </div>
 
-<% if @event.user_id == current_user.id %>
+<% if @event.user_id == current_user.id || current_user.admin %>
 	<div>
 		<%= link_to "Edit Event", edit_event_path %>	
 	</div>
@@ -21,18 +21,38 @@
 
 <% if @event.users.exclude? current_user %>
 	<%= button_to "I wanna join this event!", action: "add_user_to_event", id: @event.id %>
+<% elsif @event.users.include? current_user %>
+	<%= button_to "I can't make it to this event anymore.", action: "remove_user_from_event", id: @event.id %>
+<% end %>
+
+
+<% if current_user.admin %>
+
+	<div class="notice"><%= flash[:notice] if flash[:notice] %></div>
+
+	<%= form_for(@event, url: events_admin_remove_user_from_event_path, method: :post) do |f| %>
+
+		<%= f.hidden_field :event_id, value: @event.id %>
+
+		<%= f.label :user, value: "User: " %><br>
+
+		<%= f.select(:user_id, options_from_collection_for_select(@event.users, :id, :username)) %>
+
+		<%= f.submit "Remove this user from the event.", {remote: true } %>
+
+	<% end %>
 <% end %>
 
 <div class="user-container">
-	<% if @event.users.length == 1%>
+	<% if @event.users.length == 1 %>
 		<h4><%= @event.users.length %> person near you is attending this event!</h4>
 	<% else %>
 		<h4><%= @event.users.length %> people near you are attending this event!</h4>
 	<% end %>
 		<% @event.users.each do |user| %>
 			<div class="user-card">
+				<div class="avatar-small"><%= image_tag user.avatar.url :small %></div>
 				<p><%= user.username %></p>
-				<!-- Add user avatar here as well. -->
 		<% end %>
 </div>
 
@@ -44,7 +64,7 @@
 			<h5>Posted by: <%= (User.find_by id: comment.user_id).username %></h5>
 			<p><%= comment.content %></p>
 
-			<% if comment.user_id == current_user.id %>
+			<% if comment.user_id == current_user.id || current_user.admin %>
 				<div>
 					<%= link_to "Edit Comment", edit_comment_path(comment.id) %>
 				</div>
@@ -54,6 +74,8 @@
 			<% end %>
 		</div>
 	<% end %>
-	<%= render '/comments/create_new_comment' %>
+	<% if @event.users.include? current_user || current_user.admin %>
+		<%= render '/comments/create_new_comment' %>
+	<% end %>
 </div>
 

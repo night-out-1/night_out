@@ -1,6 +1,6 @@
 class EventsController < ApplicationController
 
-	before_action :set_event, only: [:show, :edit, :update, :destroy, :add_user_to_event]
+	before_action :set_event, only: [:show, :edit, :update, :destroy, :add_user_to_event, :remove_user_from_event]
   before_action :authenticate_user!, :except => [:index]
 
 	def index
@@ -9,6 +9,18 @@ class EventsController < ApplicationController
       		@user = User.find(current_user.id)
       		@search = @user.postal_code
       		@base_locations = Yelp.client.search(@search)
+      		zip = @user.postal_code.to_i
+      		max_zip = zip + 150
+      		min_zip = zip - 150
+      		@event_id_array = []
+      		@events.each do |event| 
+      			if event.location_postal_code.to_i > min_zip && event.location_postal_code.to_i < max_zip
+      				@event_id_array.push(event.id)
+      			end
+      		end
+      		for i in [0..@event_id_array.length] do
+      			@base_events = Event.find(@event_id_array[i])
+      		end 
     	else
       		@base_locations = Yelp.client.search("Philadelphia")
     	end
@@ -70,13 +82,37 @@ class EventsController < ApplicationController
 
 	def search
 		@responses = Yelp.client.search(params[:location])
-		@events = Event.all
+		zip = params[:location].to_i
+      	max_zip = zip + 150
+      	min_zip = zip - 150
+   		@events = Event.all
+   		@event_id_array = []
+      	@events.each do |event| 
+      		if event.location_postal_code.to_i > min_zip && event.location_postal_code.to_i < max_zip
+      			@event_id_array.push(event.id)
+      		end
+      	end
+      	for i in [0..@event_id_array.length] do
+      		@base_events = Event.find(@event_id_array[i])
+      	end 
 		render :index
 	end
 
 	def add_user_to_event
 		@event.users.push(current_user)
 		redirect_to event_path(@event)
+	end
+
+	def remove_user_from_event
+		@event.users.delete(current_user)
+		redirect_to event_path(@event)
+	end
+
+	def admin_remove_user_from_event
+		@event = Event.find(params[:event][:event_id])
+		@event.users.delete(User.find(params[:event][:user_id]))
+		redirect_to event_path(@event)
+	  flash[:notice] = "User deleted."
 	end
 
 	private
