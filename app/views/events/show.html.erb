@@ -51,8 +51,8 @@
 	<% end %>
 		<% @event.users.each do |user| %>
 			<div class="user-card">
+				<div class="avatar"><%= image_tag user.avatar.url :small %></div>
 				<p><%= user.username %></p>
-				<!-- Add user avatar here as well. -->
 		<% end %>
 </div>
 
