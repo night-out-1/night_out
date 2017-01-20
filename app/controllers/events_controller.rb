@@ -12,7 +12,7 @@ class EventsController < ApplicationController
       		@events = Event.all
       		@array = []
       		@events.each do |event|
-      			array = [event.id, event.location_latitude.to_f]
+      			array = [event.id, event.location_latitude.to_f, event.location_longitude.to_f]
       			@array.push(array)
       		end
 

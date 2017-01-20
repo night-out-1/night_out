@@ -67,11 +67,11 @@ function showPosition(position) {
 	latitude_min = latitude - 7;
 	latitude_max = latitude + 7;
  	console.log(longitude, latitude);
- 	var test = document.createElement("DIV")
- 	var text = document.createTextNode(events);
- 	test.appendChild(text)
- 	var event_container = document.getElementsByClassName("event-container")[0]
- 	event_container.appendChild(test)
+ 	// var test = document.createElement("DIV")
+ 	// var text = document.createTextNode(events);
+ 	// test.appendChild(text)
+ 	// var event_container = document.getElementsByClassName("event-container")[0]
+ 	// event_container.appendChild(test)
 
 
 
@@ -103,6 +103,23 @@ function showError(error) {
     }
 }
 
+function getLatLong(){
+	var nearby_ids = [];
+	for (var i=0; i<array.length; i++){
+		var a = array[i][1] - latitude;
+		var b = array[i][2] - longitude;
+		var c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+		if (c < .145){
+			nearby_ids.push(array[i][0]);
+		};
+	};
+	// console.log("yo");
+	// console.log(array);
+	// console.log(array[2])
+	// console.log(array[0][1])
+	// console.log(Math.pow(array[2][0], 2))
+	// console.log(nearby_ids);
+}
 // function showEvents(){
 // 	for (i=0; i<2; i++){
 // 		document.getElementsByClassName("event-card")[i].style.display= "block";
