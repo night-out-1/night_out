@@ -48,6 +48,10 @@ $(document).ready(function(){
 
 window.onload = getLocation
 
+var longitude = "";
+var latitude = "";
+var latitude_min = "";
+var latitude_max = "";
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -58,9 +62,26 @@ function getLocation() {
 }
 
 function showPosition(position) {
-	var x = document.getElementById("demo");
-    x.innerHTML = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude + " then " + current_user_id;
+	latitude = position.coords.latitude
+	longitude = position.coords.longitude
+	latitude_min = latitude - 7;
+	latitude_max = latitude + 7;
+ 	console.log(longitude, latitude);
+ 	var test = document.createElement("DIV")
+ 	var text = document.createTextNode(events_son.busines);
+ 	test.appendChild(text)
+ 	var event_container = document.getElementsByClassName("event-container")[0]
+ 	event_container.appendChild(test)
+
+
+
+	// window.open("localhost:3000//controller/index?latitude_min="+latitude_min+"&latitude_max="+latitude_max,"_self");
+	// console.log(longitude, latitude);
+	// console.log("antes")
+	// showEvents();
+	// console.log("despues");
+	// console.log(latitude_min);
+
 }
 
 function showError(error) {
@@ -80,6 +101,19 @@ function showError(error) {
             break;
     }
 }
+
+// function showEvents(){
+// 	for (i=0; i<2; i++){
+// 		document.getElementsByClassName("event-card")[i].style.display= "block";
+// 		console.log("before");
+// 	};
+// 	console.log("after");
+// }
+
+// function replaceAll(str, find, replace) {
+//   return str.replace(new RegExp(find, 'g'), replace);
+// }
+
 
 
 

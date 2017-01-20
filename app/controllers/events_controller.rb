@@ -4,14 +4,31 @@ class EventsController < ApplicationController
   before_action :authenticate_user!, :except => [:index]
 
 	def index
-		@events = Event.all
+		#below if else statement is for locations based on user zip or philly if no current user
 		if current_user
       		@user = User.find(current_user.id)
       		@search = @user.postal_code
       		@base_locations = Yelp.client.search(@search)
+      		@events = Event.all
+      		@events_son = @events.to_json  
     	else
       		@base_locations = Yelp.client.search("Philadelphia")
+      		@events = Event.where(location_city:  "Philadelphia")
+      		@search = @user.postal_code
     	end
+    	@latitude_min = params[:latitude_min]
+    	@latitude_max = params[:latitude_max]
+    	
+    
+    	#below events is defined for testing
+    	#@events = Event.all
+    	#below if else statement is for events based on user geolocate unless no geolocate then based on user zip
+    	#currently not in use and in psuedocode
+    	# if geolocation_works
+    	# 	@events = Event.where(lat_long is in Lat_long_range)
+    	# else
+    	# 	@events = Event.where(zipcode is in zipcode range)
+    	# end
 	end
 
 	def show
@@ -27,6 +44,8 @@ class EventsController < ApplicationController
 		@location_photo_url= params[:location_photo_url]
 		@location_url= params[:location_url]
 		@location_postal_code = params[:location_postal_code]
+		@location_latitude = params[:location_latitude]
+		@location_longitude = params[:location_longitude]
 		@event = Event.new
 		@event.location_name = @location_name
 		@event.location_street_address = @location_street_address
@@ -34,6 +53,8 @@ class EventsController < ApplicationController
 		@event.location_photo_url = @location_photo_url
 		@event.location_url = @location_url
 		@event.location_postal_code = @location_postal_code
+		@event.location_latitude = @location_latitude
+		@event.location_longitude = @location_longitude
 		@event.creator = current_user.id
 		@event.user_id = current_user.id
 		@event.save

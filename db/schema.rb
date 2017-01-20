@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20170119022251) do
     t.string   "location_url"
     t.string   "location_street_address"
     t.string   "location_city"
+    t.string   "location_latitude"
+    t.string   "location_longitude"
     t.string   "location_postal_code"
   end
 

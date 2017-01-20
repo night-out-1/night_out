@@ -1,6 +1,7 @@
-
 <div class="container event-container">
 	<h2>CHANGE YOUR LOCATION</h2>
+	<%= @latitude_min %></br>
+	<%= @latitude_max %></br>
 
 	<%=form_tag "/events/search" do %>
 		<%=label_tag (:location)%>
@@ -24,6 +25,8 @@
 					<%= hidden_field_tag(:location_street_address, @responses.businesses[i].location.address)%>
 					<%= hidden_field_tag(:location_city, @responses.businesses[i].location.city)%>
 					<%= hidden_field_tag(:location_postal_code, @responses.businesses[i].location.postal_code)%>
+					<%= hidden_field_tag(:location_latitude, @responses.businesses[i].location.coordinate.latitude)%>
+					<%= hidden_field_tag(:location_longitude, @responses.businesses[i].location.coordinate.longitude)%>
 					<%= submit_tag "Create Event" %>
 				<% end %>
 			</div>
@@ -48,6 +51,8 @@
 			<% end %>
 	<% end %>
 
+			
+
 	<h2>EVENTS HAPPENING</h2>
 
 	<% if @events %>
@@ -61,6 +66,15 @@
 		<% end %>
 	<% end %>
 </div>
+
+<script>
+events_raw = '<%=escape_javascript @events_son %>';
+// events_edit = events_raw.replace("&quot;", "");
+// events = events_edit.replace("&#39;", ""); 
+events_edit = events_raw.replace(/&quot;/g, '');
+events = events_edit.replace(/&#39;/g, '');
+events_list = events.split(",");
+</script>
 
 
 

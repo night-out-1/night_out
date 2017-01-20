@@ -3,8 +3,7 @@
 	<div class="container-fluid bg-1 text-left">
 	<div class="jumbotron">
 	    <h1 class="text-center">What are you doing tonight?</h1>
-	    <!-- This code shows the latitude and longitude of the location of the device. It is not currently used to populate a search of restaurants, but eventually can be when the lat and long are able to be converted to zip code... -->
-		<p id="demo"></p>
+	    <!-- This code shows an example of sending the current user id to javascript as a variable-->
 		<% if current_user %>
 			<script>
  				var current_user_id = <%= current_user.id.to_s %>;
