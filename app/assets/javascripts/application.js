@@ -46,7 +46,7 @@ $(document).ready(function(){
 });
 
 
-window.onload = getLocation
+// window.onload = getLocation
 
 
 function getLocation() {
@@ -59,8 +59,8 @@ function getLocation() {
 
 function showPosition(position) {
 	var x = document.getElementById("demo");
-    x.innerHTML = "Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude + " then " + current_user_id;
+    console.log("Latitude: " + position.coords.latitude + 
+    "  Longitude: " + position.coords.longitude + "  from geolocation in application.js file.")
 }
 
 function showError(error) {
