@@ -45,7 +45,7 @@ $(document).ready(function(){
 
 });
 
-
+// if you want to run the geolocator, un-commentout the line below and refresh the page and the console will show you the coordinates
 // window.onload = getLocation
 
 
