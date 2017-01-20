@@ -39,6 +39,8 @@ class EventsController < ApplicationController
 		@location_photo_url= params[:location_photo_url]
 		@location_url= params[:location_url]
 		@location_postal_code = params[:location_postal_code]
+		@location_latitude = params[:location_latitude]
+		@location_longitude = params[:location_longitude]
 		@event = Event.new
 		@event.location_name = @location_name
 		@event.location_street_address = @location_street_address
@@ -46,6 +48,8 @@ class EventsController < ApplicationController
 		@event.location_photo_url = @location_photo_url
 		@event.location_url = @location_url
 		@event.location_postal_code = @location_postal_code
+		@event.location_latitude = @location_latitude
+		@event.location_longitude = @location_longitude
 		@event.creator = current_user.id
 		@event.user_id = current_user.id
 		@event.save
