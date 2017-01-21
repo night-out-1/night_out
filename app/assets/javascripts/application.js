@@ -71,6 +71,8 @@ function showPosition(position) {
 }
 
 function showError(error) {
+	console.log("location services off");
+		document.getElementById("zip_events").classList.remove("hidden");
 	// var x = document.getElementById("demo");
  //    switch(error.code) {
  //        case error.PERMISSION_DENIED:

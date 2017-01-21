@@ -1,3 +1,8 @@
+<% if current_user %>
+	<script>
+		var array = <%=@array%>
+	</script>
+<% end %>
 <div class="container">
 	<div class="row">
 		<div class="col-md-4">
@@ -6,10 +11,6 @@
 			</div>
 		</div>
 			
-		
-
-
-
 		<div class="col-md-8">
 			<div class="profile">
 				<h1>Events</h1>
@@ -29,11 +30,6 @@
 	</div>
 </div>
 
-	<% if current_user %>
-		<script>
-			var array = <%=@array%>
-		</script>
-	<% end %>
 
 
 

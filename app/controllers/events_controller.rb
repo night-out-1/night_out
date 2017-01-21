@@ -1,20 +1,22 @@
 class EventsController < ApplicationController
 
-	before_action :set_event, only: [:show, :edit, :update, :destroy, :add_user_to_event, :remove_user_from_event]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :add_user_to_event, :remove_user_from_event]
   before_action :authenticate_user!, :except => [:index]
 
 	def index
-		#below if else statement is for locations based on user zip or philly if no current user
 		if current_user
       		@user = User.find(current_user.id)
+      		#below sets locations based on user's home zip code
       		@search = @user.postal_code
       		@base_locations = Yelp.client.search(@search)
+      		#below sets @array to an array of id's and lat and long of all events in order to send that to JS
       		@events = Event.all
       		@array = []
       		@events.each do |event|
       			array = [event.id, event.location_latitude.to_f, event.location_longitude.to_f]
       			@array.push(array)
       		end
+      		#below sets @zip_events to events close to the zip code of user's home zip code
       		zip = @user.postal_code.to_i
       		max_zip = zip + 150
       		min_zip = zip - 150
@@ -27,9 +29,7 @@ class EventsController < ApplicationController
       		for i in [0..@zip_event_id_array.length] do
       			@zip_events = Event.find(@zip_event_id_array[i])
       		end 
-    	end
-    	@latitude_min = params[:latitude_min]
-    	@latitude_max = params[:latitude_max] 	
+    	end	
 	end
 
 	def show
@@ -91,7 +91,9 @@ class EventsController < ApplicationController
 	end
 
 	def search
-		@responses = Yelp.client.search(params[:location])
+		#below sets @locations_responses to array of yelp locations with search parameters of the search box
+		@location_responses = Yelp.client.search(params[:location])
+		#below sets @event_responses to array of responses with zip code within range of zip code in search box
 		zip = params[:location].to_i
       	max_zip = zip + 150
       	min_zip = zip - 150
@@ -103,7 +105,7 @@ class EventsController < ApplicationController
       		end
       	end
       	for i in [0..@event_id_array.length] do
-      		@base_events = Event.find(@event_id_array[i])
+      		@event_responses = Event.find(@event_id_array[i])
       	end 
 		render :index
 	end

@@ -1,7 +1,7 @@
 <script>
 	var array = <%= @array%>
 </script>
-<script> getLocation(); getLatLong() </script>
+<script> getLatLong()</script>
 
 <div class="container event-container">
 
@@ -15,47 +15,45 @@
 
 	<h2> MAKE A NEW EVENT </h2>
 
-	<% if @responses %>
+	<% if @location_responses %>
 		<% for i in (0..5)%>
 			<div>
-				<img src=<%=@responses.businesses[i].image_url%>></br>
-				<%= @responses.businesses[i].name %></br>
+				<img src=<%=@location_responses.businesses[i].image_url%>></br>
+				<%= @location_responses.businesses[i].name %></br>
 			</div>
 			<div>
 				<%= form_tag '/events/new' do%>
-					<%= hidden_field_tag(:location_name, @responses.businesses[i].name)%>
-					<%= hidden_field_tag(:location_photo_url, @responses.businesses[i].image_url)%>
-					<%= hidden_field_tag(:location_url, @responses.businesses[i].url) %>
-					<%= hidden_field_tag(:location_street_address, @responses.businesses[i].location.address)%>
-					<%= hidden_field_tag(:location_city, @responses.businesses[i].location.city)%>
-					<%= hidden_field_tag(:location_postal_code, @responses.businesses[i].location.postal_code)%>
-					<%= hidden_field_tag(:location_latitude, @responses.businesses[i].location.coordinate.latitude)%>
-					<%= hidden_field_tag(:location_longitude, @responses.businesses[i].location.coordinate.longitude)%>
+					<%= hidden_field_tag(:location_name, @location_responses.businesses[i].name)%>
+					<%= hidden_field_tag(:location_photo_url, @location_responses.businesses[i].image_url)%>
+					<%= hidden_field_tag(:location_url, @location_responses.businesses[i].url) %>
+					<%= hidden_field_tag(:location_street_address, @location_responses.businesses[i].location.address)%>
+					<%= hidden_field_tag(:location_city, @location_responses.businesses[i].location.city)%>
+					<%= hidden_field_tag(:location_postal_code, @location_responses.businesses[i].location.postal_code)%>
+					<%= hidden_field_tag(:location_latitude, @location_responses.businesses[i].location.coordinate.latitude)%>
+					<%= hidden_field_tag(:location_longitude, @location_responses.businesses[i].location.coordinate.longitude)%>
 					<%= submit_tag "Create Event" %>
 				<% end %>
 			</div>
 		<% end %>
-		<% else %>
-			<% for i in (0..5)%>
-				<div>
-					<img src=<%=@base_locations.businesses[i].image_url%>></br>
-					<%= @base_locations.businesses[i].name %></br>
-				</div>
-				<div>
-					<%= form_tag '/events/new' do%>
-					<%= hidden_field_tag(:location_name, @base_locations.businesses[i].name)%>
-					<%= hidden_field_tag(:location_photo_url, @base_locations.businesses[i].image_url)%>
-					<%= hidden_field_tag(:location_url, @base_locations.businesses[i].url) %>
-					<%= hidden_field_tag(:location_street_address, @base_locations.businesses[i].location.address)%>
-					<%= hidden_field_tag(:location_city, @base_locations.businesses[i].location.city)%>
-					<%= hidden_field_tag(:location_postal_code, @base_locations.businesses[i].location.postal_code)%>
-					<%= submit_tag "Create Event" %>
-				<% end %>
+	<% else %>
+		<% for i in (0..5)%>
+			<div>
+				<img src=<%=@base_locations.businesses[i].image_url%>></br>
+				<%= @base_locations.businesses[i].name %></br>
 			</div>
+			<div>
+				<%= form_tag '/events/new' do%>
+				<%= hidden_field_tag(:location_name, @base_locations.businesses[i].name)%>
+				<%= hidden_field_tag(:location_photo_url, @base_locations.businesses[i].image_url)%>
+				<%= hidden_field_tag(:location_url, @base_locations.businesses[i].url) %>
+				<%= hidden_field_tag(:location_street_address, @base_locations.businesses[i].location.address)%>
+				<%= hidden_field_tag(:location_city, @base_locations.businesses[i].location.city)%>
+				<%= hidden_field_tag(:location_postal_code, @base_locations.businesses[i].location.postal_code)%>
+				<%= submit_tag "Create Event" %>
 			<% end %>
+		</div>
+		<% end %>
 	<% end %>
-
-			
 
 	<h2>EVENTS HAPPENING</h2>
 
@@ -70,23 +68,32 @@
 		<% end %>
 	<% end %>
 
+	<% if @event_responses %>
+		<% @event_responses.each do |event| %>
+			<div class="event-card">
+				<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
+				<h4><%= event.location_name %></h4>
+				<h4><%= event.time %></h4>
+				<p><%= event.description %></p>
+			</div>
+		<% end %>
+	<% else %>
 	<% if @zip_events %>
-		<div class="hidden" id="zip_events">
-			<h4> These events are happening in your home zip code area. To show the events in your immediate area, please turn on your location settings and return to your profile page.</h4>
-			<% @zip_events.each do |event| %>
-				<div class="event-card">
-					<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
-					<h4><%= event.location_name %></h4>
-					<h4><%= event.time %></h4>
-					<p><%= event.description %></p>
-				</div>
-			<% end %>
-		</div>
+			<div class="hidden" id="zip_events">
+				<h4> These events are happening in your home zip code area. To show the events in your immediate area, please turn on your location settings and return to your profile page.</h4>
+				<% @zip_events.each do |event| %>
+					<div class="event-card">
+						<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
+						<h4><%= event.location_name %></h4>
+						<h4><%= event.time %></h4>
+						<p><%= event.description %></p>
+					</div>
+				<% end %>
+			</div>
+		<% end %>
 	<% end %>
 
-<script>
-	var array = <%= @array%>
-</script>
+
 
 
 
