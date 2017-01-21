@@ -15,26 +15,21 @@ class EventsController < ApplicationController
       			array = [event.id, event.location_latitude.to_f, event.location_longitude.to_f]
       			@array.push(array)
       		end
-
-
-    	else
-      		@base_locations = Yelp.client.search("Philadelphia")
-      		@events = Event.where(location_city:  "Philadelphia")
-      		@search = @user.postal_code
+      		zip = @user.postal_code.to_i
+      		max_zip = zip + 150
+      		min_zip = zip - 150
+      		@zip_event_id_array = []
+      		@events.each do |event| 
+      			if event.location_postal_code.to_i > min_zip && event.location_postal_code.to_i < max_zip
+      				@zip_event_id_array.push(event.id)
+      			end
+      		end
+      		for i in [0..@zip_event_id_array.length] do
+      			@zip_events = Event.find(@zip_event_id_array[i])
+      		end 
     	end
     	@latitude_min = params[:latitude_min]
-    	@latitude_max = params[:latitude_max]
-    	
-    
-    	#below events is defined for testing
-    	#@events = Event.all
-    	#below if else statement is for events based on user geolocate unless no geolocate then based on user zip
-    	#currently not in use and in psuedocode
-    	# if geolocation_works
-    	# 	@events = Event.where(lat_long is in Lat_long_range)
-    	# else
-    	# 	@events = Event.where(zipcode is in zipcode range)
-    	# end
+    	@latitude_max = params[:latitude_max] 	
 	end
 
 	def show

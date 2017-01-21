@@ -20,6 +20,11 @@
 		 <a href=<%=event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a><br>
 	 <% end %>
 
+<% if current_user %>
+	<script>
+		var array = <%=@array%>
+	</script>
+<% end %>
 
 </div>
 

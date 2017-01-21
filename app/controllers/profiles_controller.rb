@@ -4,6 +4,10 @@ class ProfilesController < ApplicationController
 
   def index
   	@users = User.all
+  end
+
+  def show
+  	@user = User.find_by_id(params[:id])
   	if current_user
     	@user = User.find(current_user.id)
     	@events = Event.all
@@ -13,10 +17,5 @@ class ProfilesController < ApplicationController
       		@array.push(array)
    		end
     end
-  end
-
-  def show
-  	@user = User.find_by_id(params[:id])
-
   end
 end

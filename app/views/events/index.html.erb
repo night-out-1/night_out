@@ -1,12 +1,10 @@
-<script> getLatLong() </script>
+<script>
+	var array = <%= @array%>
+</script>
+<script> getLocation(); getLatLong() </script>
 <div class="container event-container">
-	<
 
 	<h2>CHANGE YOUR LOCATION</h2>
-	<%= @latitude_min %></br>
-	<%= @latitude_max %></br>
-
-	<%= @array %>
 
 	<%=form_tag "/events/search" do %>
 		<%=label_tag (:location)%>
@@ -62,7 +60,7 @@
 
 	<% if @events %>
 		<% @events.each do |event| %>
-			<div class="event-card">
+			<div class="event-card hidden" id="<%=event.id%>">
 				<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
 				<h4><%= event.location_name %></h4>
 				<h4><%= event.time %></h4>
@@ -70,17 +68,21 @@
 			</div>
 		<% end %>
 	<% end %>
-</div>
+
+	<% if @zip_events %>
+		<h3 class="hidden"> These events are happening in your home zip code area. To show the events in your immediate area, please turn on your location settings and return to your profile page.</h3>
+		<% @zip_events.each do |event| %>
+			<div class="event-card hidden" id="<%=event.id%><%=event.id%>">
+				<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
+				<h4><%= event.location_name %></h4>
+				<h4><%= event.time %></h4>
+				<p><%= event.description %></p>
+			</div>
+		<% end %>
+	<% end %>
 
 <script>
-// events_raw = '<%=escape_javascript @events_son %>';
-// // events_edit = events_raw.replace("&quot;", "");
-// // events = events_edit.replace("&#39;", ""); 
-// events_edit = events_raw.replace(/&quot;/g, '');
-// events = events_edit.replace(/&#39;/g, '');
-// events_list = events.split(",");
-
-var array = <%= @array%>
+	var array = <%= @array%>
 </script>
 
 

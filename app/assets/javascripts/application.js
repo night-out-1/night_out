@@ -113,6 +113,12 @@ function getLatLong(){
 			nearby_ids.push(array[i][0]);
 		};
 	};
+	console.log(nearby_ids);
+	for (var i=0; i<nearby_ids.length; i++){
+		document.getElementById(nearby_ids[i].toString()).classList.remove("hidden");
+		document.getElementById(nearby_ids[i].toString()).style.display= "block";
+	};
+
 	// console.log("yo");
 	// console.log(array);
 	// console.log(array[2])
