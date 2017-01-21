@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :profiles
 
 get 'events/search' => 'events#index'
+get '/controller/index' => 'events#index'
 
 post 'events/search'
 

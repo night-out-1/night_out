@@ -48,8 +48,10 @@ $(document).ready(function(){
 // if you want to run the geolocator, un-commentout the line below and refresh the page and the console will show you the coordinates
 window.onload = getLocation
 
-var latitude = "";
-var longitude = "";
+var longitude = null;
+var latitude = null;
+var latitude_min = "";
+var latitude_max = "";
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -60,43 +62,57 @@ function getLocation() {
 }
 
 function showPosition(position) {
-	var x = document.getElementById("demo");
-	latitude = position.coords.latitude;
-	longitude = position.coords.longitude;
-    console.log("Latitude: " + position.coords.latitude + 
-    "  Longitude: " + position.coords.longitude + "  from geolocation in application.js file.")
+	// var x = document.getElementById("demo");
+	latitude = position.coords.latitude
+	longitude = position.coords.longitude
+	latitude_min = latitude - 7;
+	latitude_max = latitude + 7;
+ 	console.log(longitude, latitude)
 }
 
 function showError(error) {
-	var x = document.getElementById("demo");
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            x.innerHTML = "User denied the request for Geolocation."
-            break;
-        case error.POSITION_UNAVAILABLE:
-            x.innerHTML = "Location information is unavailable."
-            break;
-        case error.TIMEOUT:
-            x.innerHTML = "The request to get user location timed out."
-            break;
-        case error.UNKNOWN_ERROR:
-            x.innerHTML = "An unknown error occurred."
-            break;
-    }
+	// var x = document.getElementById("demo");
+ //    switch(error.code) {
+ //        case error.PERMISSION_DENIED:
+ //            x.innerHTML = "User denied the request for Geolocation."
+ //            break;
+ //        case error.POSITION_UNAVAILABLE:
+ //            x.innerHTML = "Location information is unavailable."
+ //            break;
+ //        case error.TIMEOUT:
+ //            x.innerHTML = "The request to get user location timed out."
+ //            break;
+ //        case error.UNKNOWN_ERROR:
+ //            x.innerHTML = "An unknown error occurred."
+ //            break;
+    //}
 }
-
 
 function getLatLong(){
-	var nearby_ids = [];
-	for (var i=0; i<array.length; i++){
-		var a = array[i][1] - latitude;
-		var b = array[i][2] - longitude;
-		var c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
-		if (c < .145){
-			nearby_ids.push(array[i][0]);
+	if (latitude != null){
+		var nearby_ids = [];
+		for (var i=0; i<array.length; i++){
+			var a = array[i][1] - latitude;
+			var b = array[i][2] - longitude;
+			var c = Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
+			if (c < .145){
+				nearby_ids.push(array[i][0]);
+			};
 		};
+		console.log(nearby_ids);
+		for (var i=0; i<nearby_ids.length; i++){
+			document.getElementById(nearby_ids[i].toString()).classList.remove("hidden");
+			document.getElementById(nearby_ids[i].toString()).style.display= "block";
+		};
+	}
+	else{
+		console.log("location services off");
+		document.getElementById("zip_events").classList.remove("hidden");
 	};
-	console.log(nearby_ids);
+
 }
+
+
+
 
 

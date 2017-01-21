@@ -1,5 +1,10 @@
-<script> getLatLong() </script>
+<script>
+	var array = <%= @array%>
+</script>
+<script> getLocation(); getLatLong() </script>
+
 <div class="container event-container">
+
 	<h2>CHANGE YOUR LOCATION</h2>
 
 	<%=form_tag "/events/search" do %>
@@ -24,8 +29,8 @@
 					<%= hidden_field_tag(:location_street_address, @responses.businesses[i].location.address)%>
 					<%= hidden_field_tag(:location_city, @responses.businesses[i].location.city)%>
 					<%= hidden_field_tag(:location_postal_code, @responses.businesses[i].location.postal_code)%>
-					<%= hidden_field_tag(:location_latitude, @responses.businesses[i].location.coordinates.latitude)%>
-					<%= hidden_field_tag(:location_longitude, @responses.businesses[i].location.coordinates.longitude)%>
+					<%= hidden_field_tag(:location_latitude, @responses.businesses[i].location.coordinate.latitude)%>
+					<%= hidden_field_tag(:location_longitude, @responses.businesses[i].location.coordinate.longitude)%>
 					<%= submit_tag "Create Event" %>
 				<% end %>
 			</div>
@@ -50,11 +55,13 @@
 			<% end %>
 	<% end %>
 
+			
+
 	<h2>EVENTS HAPPENING</h2>
 
 	<% if @events %>
 		<% @events.each do |event| %>
-			<div class="event-card">
+			<div class="event-card hidden" id="<%=event.id%>">
 				<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
 				<h4><%= event.location_name %></h4>
 				<h4><%= event.time %></h4>
@@ -63,17 +70,26 @@
 		<% end %>
 	<% end %>
 
-	<% if @base_events %>
-		<% @base_events.each do |event| %>
-			<div class="event-card">
-				<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
-				<h4><%= event.location_name %></h4>
-				<h4><%= event.time %></h4>
-				<p><%= event.description %></p>
-			</div>
-		<% end %>
+	<% if @zip_events %>
+		<div class="hidden" id="zip_events">
+			<h4> These events are happening in your home zip code area. To show the events in your immediate area, please turn on your location settings and return to your profile page.</h4>
+			<% @zip_events.each do |event| %>
+				<div class="event-card">
+					<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
+					<h4><%= event.location_name %></h4>
+					<h4><%= event.time %></h4>
+					<p><%= event.description %></p>
+				</div>
+			<% end %>
+		</div>
 	<% end %>
-</div>
+
+<script>
+	var array = <%= @array%>
+</script>
+
+
+
 
 
 

@@ -4,14 +4,32 @@ class EventsController < ApplicationController
   before_action :authenticate_user!, :except => [:index]
 
 	def index
-		@events = Event.all
+		#below if else statement is for locations based on user zip or philly if no current user
 		if current_user
       		@user = User.find(current_user.id)
       		@search = @user.postal_code
       		@base_locations = Yelp.client.search(@search)
-    	else
-      		@base_locations = Yelp.client.search("Philadelphia")
+      		@events = Event.all
+      		@array = []
+      		@events.each do |event|
+      			array = [event.id, event.location_latitude.to_f, event.location_longitude.to_f]
+      			@array.push(array)
+      		end
+      		zip = @user.postal_code.to_i
+      		max_zip = zip + 150
+      		min_zip = zip - 150
+      		@zip_event_id_array = []
+      		@events.each do |event| 
+      			if event.location_postal_code.to_i > min_zip && event.location_postal_code.to_i < max_zip
+      				@zip_event_id_array.push(event.id)
+      			end
+      		end
+      		for i in [0..@zip_event_id_array.length] do
+      			@zip_events = Event.find(@zip_event_id_array[i])
+      		end 
     	end
+    	@latitude_min = params[:latitude_min]
+    	@latitude_max = params[:latitude_max] 	
 	end
 
 	def show

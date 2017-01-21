@@ -58,9 +58,11 @@
 
 <!-- content 3 -->
 
-<script>
-var array = <%=@array%> 
-</script>
+<% if current_user %>
+	<script>
+		var array = <%=@array%>
+	</script>
+<% end %>
 
 
 
