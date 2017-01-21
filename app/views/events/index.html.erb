@@ -70,15 +70,17 @@
 	<% end %>
 
 	<% if @zip_events %>
-		<h3 class="hidden"> These events are happening in your home zip code area. To show the events in your immediate area, please turn on your location settings and return to your profile page.</h3>
-		<% @zip_events.each do |event| %>
-			<div class="event-card hidden" id="<%=event.id%><%=event.id%>">
-				<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
-				<h4><%= event.location_name %></h4>
-				<h4><%= event.time %></h4>
-				<p><%= event.description %></p>
-			</div>
-		<% end %>
+		<div class="hidden" id="zip_events">
+			<h4> These events are happening in your home zip code area. To show the events in your immediate area, please turn on your location settings and return to your profile page.</h4>
+			<% @zip_events.each do |event| %>
+				<div class="event-card">
+					<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
+					<h4><%= event.location_name %></h4>
+					<h4><%= event.time %></h4>
+					<p><%= event.description %></p>
+				</div>
+			<% end %>
+		</div>
 	<% end %>
 
 <script>
