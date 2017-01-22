@@ -1,20 +1,23 @@
-<script>
-	var array = <%= @array%>
-</script>
-<script> getLatLong()</script>
+<!-- this first line of code is to send @array to JS so that the events close to the geolocation of the user device will be shown on the events page when going there from this view. bz-->
+<%if current_user %> <script> array = <%= @array %> </script> <%end%>
+<!-- the below script runs getLangLong, which will show events in geolocated area if geolocation is enabled on device (through latitude and longitude), or will show events close by related to zip code by removing @zip_events display:hidden class. bz-->
+<% if current_user %>
+	<script> getLatLong() </script>
+<% end %>
+<!--end script, begin html-->
 
 <div class="container event-container">
-
 	<h2>CHANGE YOUR LOCATION</h2>
-
 	<%=form_tag "/events/search" do %>
 		<%=label_tag (:location)%>
 		<%=text_field_tag (:location)%>
 		<%=submit_tag ("search")%>
 	<% end %>
-
+	<%= @city%>
 	<h2> MAKE A NEW EVENT </h2>
-
+	<!-- the below line defines a variable @city within the page that is used later in deciding which events to show. bz -->
+	<% @city = nil %>
+	<!-- the below if else statement will show locations based on the home zip code of the user plugged into yelp unless the search bar has been enabled, and it will then show results from that search plugged into yelp. bz-->
 	<% if @location_responses %>
 		<% for i in (0..5)%>
 			<div>
@@ -35,6 +38,8 @@
 				<% end %>
 			</div>
 		<% end %>
+		<!--the below line defines @city as the city of the first location brought back by yelp. this is used later to decide which events to show.  this only happens if the search function has been enabled, which is why it is located in this if statement. bz -->
+		<% @city = @location_responses.businesses[0].location.city %>
 	<% else %>
 		<% for i in (0..5)%>
 			<div>
@@ -54,9 +59,8 @@
 		</div>
 		<% end %>
 	<% end %>
-
 	<h2>EVENTS HAPPENING</h2>
-
+	<!-- the below if statement makes cards for each of the events that are hidden.  If geolocation is enabled, the events with nearby latitude and longitude to the location of the device will have their display:hidden class removed by calling them with their id (both css id and ruby id). bz-->
 	<% if @events %>
 		<% @events.each do |event| %>
 			<div class="event-card hidden" id="<%=event.id%>">
@@ -67,9 +71,24 @@
 			</div>
 		<% end %>
 	<% end %>
-
-	<% if @event_responses %>
-		<% @event_responses.each do |event| %>
+<!-- the below if, elsif, else statement determines which events show up on the page. this code will make event cards for the events with zip codes close to the users home zip code.  these event cards will be hidden unless geolocation is disabled. the lack of geolocation will cause JS to remove the event cards display:hidden class through the getLatLong function. 
+these event cards will be displayed on the page unless the search bar is activated.  
+the elsif section of this code will show the events with a zip code close to the searched zip code (if the search is a zip code).  
+the if section of this code will use the @city variable defined earlier in this page to search for events whose cities match the city of the search. bz-->
+	<% if @city != nil %>
+		<% @event_responses_city = Event.where(location_city: @city) %>
+		<% if @event_responses_city %>
+			<% @event_responses_city.each do |event| %>
+				<div class="event-card">
+					<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
+					<h4><%= event.location_name %></h4>
+					<h4><%= event.time %></h4>
+					<p><%= event.description %></p>
+				</div>
+			<% end %>
+		<% end %>
+	<% elsif @event_responses_zip %>
+		<% @event_responses_zip.each do |event| %>
 			<div class="event-card">
 				<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
 				<h4><%= event.location_name %></h4>
@@ -78,7 +97,7 @@
 			</div>
 		<% end %>
 	<% else %>
-	<% if @zip_events %>
+		<% if @zip_events %>
 			<div class="hidden" id="zip_events">
 				<h4> These events are happening in your home zip code area. To show the events in your immediate area, please turn on your location settings and return to your profile page.</h4>
 				<% @zip_events.each do |event| %>
@@ -92,6 +111,7 @@
 			</div>
 		<% end %>
 	<% end %>
+</div>
 
 
 

@@ -6,17 +6,10 @@ class EventsController < ApplicationController
 	def index
 		if current_user
       		@user = User.find(current_user.id)
-      		#below sets locations based on user's home zip code
+      		#below sets locations based on user's home zip code. bz
       		@search = @user.postal_code
       		@base_locations = Yelp.client.search(@search)
-      		#below sets @array to an array of id's and lat and long of all events in order to send that to JS
-      		@events = Event.all
-      		@array = []
-      		@events.each do |event|
-      			array = [event.id, event.location_latitude.to_f, event.location_longitude.to_f]
-      			@array.push(array)
-      		end
-      		#below sets @zip_events to events close to the zip code of user's home zip code
+      		#below sets @zip_events to events close to the zip code of user's home zip code. bz
       		zip = @user.postal_code.to_i
       		max_zip = zip + 150
       		min_zip = zip - 150
@@ -35,7 +28,6 @@ class EventsController < ApplicationController
 	def show
 		@creator_name = (User.find_by id: @event.creator).username
 		@comments = Comment.all
-
 	end
 
 	def new
@@ -91,16 +83,16 @@ class EventsController < ApplicationController
 	end
 
 	def search
-		#below sets @locations_responses to array of yelp locations with search parameters of the search box
+		#below sets @locations_responses to array of yelp locations with search parameters of the search box. bz
 		@location_responses = Yelp.client.search(params[:location])
-		#below sets @event_responses to array of responses with zip code within range of zip code in search box
+		#below sets @event_responses to array of responses with zip code within range of zip code in search box. bz
 		zip = params[:location].to_i
       	max_zip = zip + 150
       	min_zip = zip - 150
    		@events = Event.all
    		@event_id_array = []
       	@events.each do |event| 
-      		if event.location_postal_code.to_i > min_zip && event.location_postal_code.to_i < max_zip
+      		if event.location_postal_code.to_i > min_zip && event.location_postal_code.to_i < max_zip 
       			@event_id_array.push(event.id)
       		end
       	end

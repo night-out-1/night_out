@@ -1,3 +1,5 @@
+<!-- this first line of code is to send @array to JS so that the events close to the geolocation of the user device will be shown on the events page when going there from this view. bz-->
+<%if current_user %> <script> array = <%= @array %> </script> <%end%>
 <!-- jumbotron  -->
 
 	<div class="container-fluid bg-1 text-left">
@@ -58,11 +60,7 @@
 
 <!-- content 3 -->
 
-<% if current_user %>
-	<script>
-		var array = <%=@array%>
-	</script>
-<% end %>
+
 
 
 
