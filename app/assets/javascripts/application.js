@@ -53,6 +53,7 @@ window.onload = getLocation
 var longitude = null;
 var latitude = null;
 var enabled = false;
+var zip_events = false;
 
 //this function finds the location of the users device and calls showPosition and showError. bz
 function getLocation() {
@@ -75,11 +76,11 @@ function showPosition(position) {
 //this function will occur when location services are disabled on the device. 
 //console log for clarity and also shows zip_events since geolocated events will not show. bz
 function showError(error) {
-	console.log("Dammit, Jim, I'm a function, not a gps!");
+	console.log("Dammit, Jim, I'm a doctor, not a gps!");
 	console.log("Bones, you could have just told me geolocation was disabled.")
 	if (enabled==true){
-		console.log("Geordi, enable the search bar.");
-		console.log("Sir, you will get an error.");
+		console.log("Chekov, enable the search bar.");
+		console.log("Sir, you vill get an error.");
 		console.log("Does it effect functionality?");
 		console.log("No, sir.  But it could be fixed.");
 		console.log("We'll cross that bridge when it comes. Enable the search bar.");
@@ -111,7 +112,7 @@ function getLatLong(){
 				nearby_ids.push(array[i][0]);
 			};
 		};
-		console.log("Data, have the geolocated events been found?");
+		console.log("Spock, have the geolocated events been found?");
 		console.log("Affirmative, captian.");
 		for (var i=0; i<nearby_ids.length; i++){
 			document.getElementById(nearby_ids[i].toString()).classList.remove("hidden");
@@ -119,8 +120,11 @@ function getLatLong(){
 		};
 	}
 	else{
-		console.log("Captain, shall show the user-zip-code based events?");
-		console.log("Make it so, number one.")
+		console.log("Uhura, what seems to be the problem?");
+		console.log("Captain, there seems to be a boolean missing.");
+		console.log("Make sure it doesn't cause any UI issues.");
+		console.log("Understood. Scotty, there will be an error if the search bar is used with geolocation. But will the correct events show?");
+		console.log("Aye, lass. Although this conversation will also show without an error when geolocation and the search bar are both disabled. There's enough logic in the events view to make it work. She'll show correctly. ");
 		document.getElementById("zip_events").classList.remove("hidden");
 	};
 
