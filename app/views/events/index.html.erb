@@ -5,15 +5,28 @@
 	<script> getLatLong() </script>
 <% end %>
 <!--end script, begin html-->
+<div class="container-fluid search-container">
+	<div class="container event-container">
+		<center><h2>CHANGE YOUR <span>LOCATION</span></h2></center>
+			<div class="col-md-6 col-md-offset-3">
+				<%=form_tag "/events/search" do %>
+					
 
-<div class="container event-container">
-	<h2>CHANGE YOUR LOCATION</h2>
-	<%=form_tag "/events/search" do %>
-		<%=label_tag (:location)%>
-		<%=text_field_tag (:location)%>
-		<%=submit_tag ("search")%>
-	<% end %>
+					<%=text_field_tag :location, nil, :class => 'form-control'%>
+						<br />
+					<center>
+						<%=submit_tag "search", :class => 'btn btn-danger'%>
+						
+					</center>
+						</div>
+					</div>
+				</div>
+				<% end %>
+			</div>
 	<%= @city%>
+
+	<div class="container-fluid event-show">
+		<div class="container">
 	<h2> MAKE A NEW EVENT </h2>
 	<!-- the below line defines a variable @city within the page that is used later in deciding which events to show. bz -->
 	<% @city = nil %>
@@ -34,10 +47,11 @@
 					<%= hidden_field_tag(:location_postal_code, @location_responses.businesses[i].location.postal_code)%>
 					<%= hidden_field_tag(:location_latitude, @location_responses.businesses[i].location.coordinate.latitude)%>
 					<%= hidden_field_tag(:location_longitude, @location_responses.businesses[i].location.coordinate.longitude)%>
-					<%= submit_tag "Create Event" %>
+					<%= submit_tag "Create Event", :class => 'btn btn-danger' %>
 				<% end %>
 			</div>
 		<% end %>
+
 		<!--the below line defines @city as the city of the first location brought back by yelp. this is used later to decide which events to show.  this only happens if the search function has been enabled, which is why it is located in this if statement. bz -->
 		<% @city = @location_responses.businesses[0].location.city %>
 		<!-- the below script changes a JS boolean so that a certain function will run. bz -->
@@ -56,7 +70,7 @@
 				<%= hidden_field_tag(:location_street_address, @base_locations.businesses[i].location.address)%>
 				<%= hidden_field_tag(:location_city, @base_locations.businesses[i].location.city)%>
 				<%= hidden_field_tag(:location_postal_code, @base_locations.businesses[i].location.postal_code)%>
-				<%= submit_tag "Create Event" %>
+				<%= submit_tag "Create Event", :class => 'btn btn-danger' %>
 			<% end %>
 		</div>
 		<% end %>
@@ -115,6 +129,9 @@ the if section of this code will use the @city variable defined earlier in this 
 		<% end %>
 	<% end %>
 </div>
+
+</div>
+	</div>
 
 
 

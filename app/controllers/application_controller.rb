@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   
   protected
 
+
   	def set_array
   		#below sets @array to an array of id's and lat and long of all events in order to send that to JS. bz
       	@events = Event.all

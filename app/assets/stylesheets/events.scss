@@ -2,3 +2,19 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.search-container {
+	background-color: black;
+	color: white;
+
+	h1 {
+		color: white;
+	}
+
+	span {
+		color: red;
+	}
+}
+
+.event-show {
+	background-color: gray;
+}

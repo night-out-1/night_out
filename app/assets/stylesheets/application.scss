@@ -17,6 +17,7 @@
 @import "static_pages";
 
 @import "profiles.scss";
+@import "events.scss";
 
   body {
       font: 16px Montserrat, sans-serif;
@@ -95,6 +96,10 @@
 
 .file-btn {
   display: none;
+}
+
+.span {
+  color: red;
 }
 
 
