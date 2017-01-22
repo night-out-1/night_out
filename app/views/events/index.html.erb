@@ -40,6 +40,8 @@
 		<% end %>
 		<!--the below line defines @city as the city of the first location brought back by yelp. this is used later to decide which events to show.  this only happens if the search function has been enabled, which is why it is located in this if statement. bz -->
 		<% @city = @location_responses.businesses[0].location.city %>
+		<!-- the below script changes a JS boolean so that a certain function will run. bz -->
+		<script> enabled = true</script>
 	<% else %>
 		<% for i in (0..5)%>
 			<div>
