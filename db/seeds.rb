@@ -23,8 +23,11 @@ event1 = Event.create(name: "Let's Get a Drink!", time: "9pm", description: "It'
  event1.users.push(user1)
  event1.users.push(user2)
  event2.users.push(user1)
+ event2.users.push(user2)
+ event2.users.push(user4)
  event3.users.push(user1)
  event3.users.push(user2)
+ event3.users.push(user4)
 
  comment1 = Comment.create(user_id: 1, event_id: 1, title: "Time Flexible", content: "If you want to do it a little later that works, too.")
 
