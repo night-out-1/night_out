@@ -1,60 +1,71 @@
-<script> getLatLong() </script>
+<!-- this first line of code is to send @array to JS so that the events close to the geolocation of the user device will be shown on the events page when going there from this view. bz-->
+<%if current_user %> <script> array = <%= @array %> </script> <%end%>
+<!-- the below script runs getLangLong, which will show events in geolocated area if geolocation is enabled on device (through latitude and longitude), or will show events close by related to zip code by removing @zip_events display:hidden class. bz-->
+<% if current_user %>
+	<script> getLatLong() </script>
+<% end %>
+<!--end script, begin html-->
+
 <div class="container event-container">
 	<h2>CHANGE YOUR LOCATION</h2>
-
 	<%=form_tag "/events/search" do %>
 		<%=label_tag (:location)%>
 		<%=text_field_tag (:location)%>
 		<%=submit_tag ("search")%>
 	<% end %>
-
+	<%= @city%>
 	<h2> MAKE A NEW EVENT </h2>
-
-	<% if @responses %>
+	<!-- the below line defines a variable @city within the page that is used later in deciding which events to show. bz -->
+	<% @city = nil %>
+	<!-- the below if else statement will show locations based on the home zip code of the user plugged into yelp unless the search bar has been enabled, and it will then show results from that search plugged into yelp. bz-->
+	<% if @location_responses %>
 		<% for i in (0..5)%>
 			<div>
-				<img src=<%=@responses.businesses[i].image_url%>></br>
-				<%= @responses.businesses[i].name %></br>
+				<img src=<%=@location_responses.businesses[i].image_url%>></br>
+				<%= @location_responses.businesses[i].name %></br>
 			</div>
 			<div>
 				<%= form_tag '/events/new' do%>
-					<%= hidden_field_tag(:location_name, @responses.businesses[i].name)%>
-					<%= hidden_field_tag(:location_photo_url, @responses.businesses[i].image_url)%>
-					<%= hidden_field_tag(:location_url, @responses.businesses[i].url) %>
-					<%= hidden_field_tag(:location_street_address, @responses.businesses[i].location.address)%>
-					<%= hidden_field_tag(:location_city, @responses.businesses[i].location.city)%>
-					<%= hidden_field_tag(:location_postal_code, @responses.businesses[i].location.postal_code)%>
-					<%= hidden_field_tag(:location_latitude, @responses.businesses[i].location.coordinates.latitude)%>
-					<%= hidden_field_tag(:location_longitude, @responses.businesses[i].location.coordinates.longitude)%>
+					<%= hidden_field_tag(:location_name, @location_responses.businesses[i].name)%>
+					<%= hidden_field_tag(:location_photo_url, @location_responses.businesses[i].image_url)%>
+					<%= hidden_field_tag(:location_url, @location_responses.businesses[i].url) %>
+					<%= hidden_field_tag(:location_street_address, @location_responses.businesses[i].location.address)%>
+					<%= hidden_field_tag(:location_city, @location_responses.businesses[i].location.city)%>
+					<%= hidden_field_tag(:location_postal_code, @location_responses.businesses[i].location.postal_code)%>
+					<%= hidden_field_tag(:location_latitude, @location_responses.businesses[i].location.coordinate.latitude)%>
+					<%= hidden_field_tag(:location_longitude, @location_responses.businesses[i].location.coordinate.longitude)%>
 					<%= submit_tag "Create Event" %>
 				<% end %>
 			</div>
 		<% end %>
-		<% else %>
-			<% for i in (0..5)%>
-				<div>
-					<img src=<%=@base_locations.businesses[i].image_url%>></br>
-					<%= @base_locations.businesses[i].name %></br>
-				</div>
-				<div>
-					<%= form_tag '/events/new' do%>
-					<%= hidden_field_tag(:location_name, @base_locations.businesses[i].name)%>
-					<%= hidden_field_tag(:location_photo_url, @base_locations.businesses[i].image_url)%>
-					<%= hidden_field_tag(:location_url, @base_locations.businesses[i].url) %>
-					<%= hidden_field_tag(:location_street_address, @base_locations.businesses[i].location.address)%>
-					<%= hidden_field_tag(:location_city, @base_locations.businesses[i].location.city)%>
-					<%= hidden_field_tag(:location_postal_code, @base_locations.businesses[i].location.postal_code)%>
-					<%= submit_tag "Create Event" %>
-				<% end %>
+		<!--the below line defines @city as the city of the first location brought back by yelp. this is used later to decide which events to show.  this only happens if the search function has been enabled, which is why it is located in this if statement. bz -->
+		<% @city = @location_responses.businesses[0].location.city %>
+		<!-- the below script changes a JS boolean so that a certain function will run. bz -->
+		<script> enabled = true</script>
+	<% else %>
+		<% for i in (0..5)%>
+			<div>
+				<img src=<%=@base_locations.businesses[i].image_url%>></br>
+				<%= @base_locations.businesses[i].name %></br>
 			</div>
+			<div>
+				<%= form_tag '/events/new' do%>
+				<%= hidden_field_tag(:location_name, @base_locations.businesses[i].name)%>
+				<%= hidden_field_tag(:location_photo_url, @base_locations.businesses[i].image_url)%>
+				<%= hidden_field_tag(:location_url, @base_locations.businesses[i].url) %>
+				<%= hidden_field_tag(:location_street_address, @base_locations.businesses[i].location.address)%>
+				<%= hidden_field_tag(:location_city, @base_locations.businesses[i].location.city)%>
+				<%= hidden_field_tag(:location_postal_code, @base_locations.businesses[i].location.postal_code)%>
+				<%= submit_tag "Create Event" %>
 			<% end %>
+		</div>
+		<% end %>
 	<% end %>
-
 	<h2>EVENTS HAPPENING</h2>
-
+	<!-- the below if statement makes cards for each of the events that are hidden.  If geolocation is enabled, the events with nearby latitude and longitude to the location of the device will have their display:hidden class removed by calling them with their id (both css id and ruby id). bz-->
 	<% if @events %>
 		<% @events.each do |event| %>
-			<div class="event-card">
+			<div class="event-card hidden" id="<%=event.id%>">
 				<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
 				<h4><%= event.location_name %></h4>
 				<h4><%= event.time %></h4>
@@ -62,18 +73,53 @@
 			</div>
 		<% end %>
 	<% end %>
-
-	<% if @base_events %>
-		<% @base_events.each do |event| %>
+<!-- the below if, elsif, else statement determines which events show up on the page. this code will make event cards for the events with zip codes close to the users home zip code.  these event cards will be hidden unless geolocation is disabled. the lack of geolocation will cause JS to remove the event cards display:hidden class through the getLatLong function. 
+these event cards will be displayed on the page unless the search bar is activated.  
+the elsif section of this code will show the events with a zip code close to the searched zip code (if the search is a zip code).  
+the if section of this code will use the @city variable defined earlier in this page to search for events whose cities match the city of the search. bz-->
+	<% if @city != nil %>
+		<% @event_responses_city = Event.where(location_city: @city) %>
+		<% if @event_responses_city %>
+			<% @event_responses_city.each do |event| %>
+				<div class="event-card">
+					<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
+					<h4><%= event.location_name %></h4>
+					<h4><%= event.time %></h4>
+					<p><%= event.description %></p>
+				</div>
+			<% end %>
+		<% end %>
+	<% elsif @event_responses_zip %>
+		<% @event_responses_zip.each do |event| %>
 			<div class="event-card">
 				<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
 				<h4><%= event.location_name %></h4>
 				<h4><%= event.time %></h4>
 				<p><%= event.description %></p>
 			</div>
+		<% end %>
+	<% else %>
+		<% if @zip_events %>
+			<div class="hidden" id="zip_events">
+				<h4> These events are happening in your home zip code area. To show the events in your immediate area, please turn on your location settings and return to your profile page.</h4>
+				<% @zip_events.each do |event| %>
+					<div class="event-card">
+						<h3><a href="/events/<%= event.id %>"><%= event.name %></a></h3>
+						<h4><%= event.location_name %></h4>
+						<h4><%= event.time %></h4>
+						<p><%= event.description %></p>
+					</div>
+				<% end %>
+			</div>
+			<script> zip_events = true </script>
 		<% end %>
 	<% end %>
 </div>
+
+
+
+
+
 
 
 

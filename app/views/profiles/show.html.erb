@@ -1,35 +1,32 @@
-
-	<div class="container">
-		<div class="row">
-				<div class="col-md-4">
-					<div class="user-image">
-					<%= image_tag @user.avatar.url :medium, :class => 'img-responsive' %>
-				</div>
+<!-- this first line of code is to send @array to JS so that the events close to the geolocation of the user device will be shown on the events page when going there from this view. bz-->
+<%if current_user %> <script> array = <%= @array %> </script> <%end%>
+<div class="container">
+	<div class="row">
+		<div class="col-md-4">
+			<div class="user-image">
+				<%= image_tag @user.avatar.url :medium, :class => 'img-responsive' %>
 			</div>
+		</div>
 			
-		
-
-
-
 		<div class="col-md-8">
 			<div class="profile">
-			<h1>Events</h1>
+				<h1>Events</h1>
 
-			<% current_user.events.each do |event| %>
-			<% url = '/events/' + event.id.to_s %>
-				<%= link_to url do %>
-				 	<%= event.name %><br>
-			 	<% end %>
+				<% current_user.events.each do |event| %>
+					<% url = '/events/' + event.id.to_s %>
+					<%= link_to url do %>
+				 		<%= event.name %><br>
+			 		<% end %>
 				 	<%= event.description%><br>
 				 	<%= event.location_name %><br>
 				 	<img src=<%= event.location_photo_url%>><br>
-				 
-				 <a href=<%=event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a><br>
-			 <% end %>
+				 	<a href=<%=event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a><br>
+				 <% end %>
 			</div>
 		</div>
+	</div>
+</div>
 
 
-		</div>
 
 

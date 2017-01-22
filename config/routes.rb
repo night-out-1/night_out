@@ -15,7 +15,10 @@ Rails.application.routes.draw do
 
   resources :profiles
 
+  post '/profiles/:id' => 'profiles#show'
+
 get 'events/search' => 'events#index'
+get '/controller/index' => 'events#index'
 
 post 'events/search'
 
