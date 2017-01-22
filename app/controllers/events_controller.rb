@@ -2,6 +2,7 @@ class EventsController < ApplicationController
 
   before_action :set_event, only: [:show, :edit, :update, :destroy, :add_user_to_event, :remove_user_from_event]
   before_action :authenticate_user!, :except => [:index]
+  before_action :autodelete_event
 
 	def index
 		if current_user
@@ -118,6 +119,16 @@ class EventsController < ApplicationController
 		redirect_to event_path(@event)
 	  flash[:notice] = "User deleted."
 	end
+
+	def autodelete_event
+		@events = Event.all
+		@events.each do |event|
+			if Time.now > event.created_at + 1.days
+				event.destroy
+			end
+		end
+	end
+
 
 	private
 
