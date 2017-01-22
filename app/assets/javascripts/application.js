@@ -45,13 +45,12 @@ $(document).ready(function(){
 
 });
 
-// if you want to run the geolocator, un-commentout the line below and refresh the page and the console will show you the coordinates
+
 window.onload = getLocation
 
 var longitude = null;
 var latitude = null;
-var latitude_min = "";
-var latitude_max = "";
+var on_events = true;
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -62,16 +61,15 @@ function getLocation() {
 }
 
 function showPosition(position) {
-	// var x = document.getElementById("demo");
 	latitude = position.coords.latitude
 	longitude = position.coords.longitude
-	latitude_min = latitude - 7;
-	latitude_max = latitude + 7;
- 	console.log(longitude, latitude)
+ 	console.log("Mr. Sulu, set coordinates for " + longitude + " and " + latitude + ".");
+ 	console.log("Aye, aye, sir.");
 }
 
 function showError(error) {
-	console.log("location services off");
+	console.log("Dammit, Jim, I'm a function, not a gps!");
+	console.log("Bones, you could have just told me geolocation was turned off.")
 	document.getElementById("zip_events").classList.remove("hidden");
 }
 
@@ -86,7 +84,7 @@ function getLatLong(){
 				nearby_ids.push(array[i][0]);
 			};
 		};
-		console.log(nearby_ids);
+		console.log("Captain, nearby ids has been set.");
 		for (var i=0; i<nearby_ids.length; i++){
 			document.getElementById(nearby_ids[i].toString()).classList.remove("hidden");
 			document.getElementById(nearby_ids[i].toString()).style.display= "block";
