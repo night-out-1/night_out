@@ -4,7 +4,8 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!, :except => [:index]
 
 	def index
-		@comments = Comment.all
+		# @comments = Comment.order(:flagged).all.reverse
+		@comments = Comment.where(flagged: true).all
 	end
 
 	def show
