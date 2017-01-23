@@ -67,7 +67,7 @@
 <div class="comment-container">
 	<% @event.comments.each do |comment| %>
 		<div class="comment-card">
-			<h4><a href="/comments/<%= comment.id %>"><%= comment.title %></a></h4>
+			<h4><%= comment.title %></h4>
 			<h5>Posted by: <%= (User.find_by id: comment.user_id).username %></h5>
 			<p><%= comment.content %></p>
 
