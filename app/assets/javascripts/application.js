@@ -131,6 +131,8 @@ function getLatLong(){
 }
 
 
-
-
+// function hideComment(){
+// 	var trollComment = document.getElementsByClassName("visible-comment")
+// }
+// Unfinished toggle show/hide for troll comments. ma
 
