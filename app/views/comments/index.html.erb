@@ -1,2 +1,31 @@
 <!-- this first line of code is to send @array to JS so that the events close to the geolocation of the user device will be shown on the events page when going there from this view. bz-->
 <%if current_user %> <script> array = <%= @array %> </script> <%end%>
+<h2>Admin Dashboard</h2>
+<h3>Review Comments</h3>
+<div class="comment-container">
+	<% @comments.each do |comment| %>
+		<div class="comment-card">
+			<h4><%= comment.title %></h4>
+			<h5>Posted by: <%= (User.find_by id: comment.user_id).username %></h5>
+			<% if comment.flagged %>
+				<div class="flag">&#127987; This comment has been flagged for removal.</div>
+			<% end %>
+			<p><%= comment.content %></p>
+			<% if !comment.flagged %>
+				<%= button_to "Flag this comment", action: "flag_comment", controller: "comments", id: comment.id %>
+			<% end %>
+			<% if comment.flagged && current_user.admin %>
+				<%= button_to "Unflag this comment", action: "admin_unflag_comment", controller: "comments", id: comment.id %>
+			<% end %>
+
+			<% if comment.user_id == current_user.id || current_user.admin %>
+				<div>
+					<%= link_to "Edit Comment", edit_comment_path(comment.id) %>
+				</div>
+				<div>
+					<%= link_to "Delete Comment", comment_path(comment.id), method: :delete, data: { confirm: "Are you sure?" } %>
+				</div>
+			<% end %>
+		</div>
+	<% end %>
+</div>
