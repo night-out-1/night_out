@@ -4,8 +4,12 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!, :except => [:index]
 
 	def index
-		# @comments = Comment.order(:flagged).all.reverse
-		@comments = Comment.where(flagged: true).all
+		# @comments = Comment.all
+		if current_user.admin
+			@comments = Comment.where(flagged: true).all
+		else
+			redirect_to profile_path(current_user.id)
+		end
 	end
 
 	def show
