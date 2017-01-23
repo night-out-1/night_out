@@ -18,6 +18,10 @@
 				<a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.referer %>" target="_blank" >
 			 		<i class='fa fa-share'>Share this event on Facebook</i>
 				</a>
+		<% else %>
+				<a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.referer %>" target="_blank" >
+			 		<i class='fa fa-share'>Share this event on Facebook</i>
+				</a>
 		<% end %>
 			<img src=<%=@event.location_photo_url%> style='width:100%'>
 			<a href=<%=@event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a>
