@@ -18,7 +18,12 @@
 
 $(document).ready(function(){
     $('.jumbotron').hide();
-    $('.jumbotron').fadeIn(6000);
+    $('.jumbotron').fadeIn(5000);
+
+    $('.li').hover(function() {
+    	$(this).slideToggle(1000);
+
+    });
 
 
     $(function() {

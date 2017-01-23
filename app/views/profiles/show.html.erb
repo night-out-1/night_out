@@ -8,23 +8,37 @@
 				<%= image_tag @user.avatar.url :small, :class => 'img-responsive' %>
 			</div>
 		</div> -->
-		<div class="container-fluid profile">
-			<div class="container">
 
+
+			<style>
+					.profile-container {
+						background-image: url(<%= @user.avatar.url %>);
+						color: white;
+					};
+					</style>
+		<div class="container-fluid profile-container">
+
+			<div class="container">
 				<div class="row">
-					<div class="col-md-5">
-						<div class="user-image">
-							
-								<h3>Hey <%= current_user.username %></h3>
-							<%= image_tag @user.avatar.url :medium %>
-							<br>
-							<br>
-							
+					<div class="col-md-4">
+
+						<%= image_tag @user.avatar.url :medium, :class => 'img-responsive' %>
+					</div>
+
+					<div class="col-md-4">
+						<h2>Hey <%= current_user.username %></h2>
+
+					</div>
+
+				</div>
+
+
+						
+					</center>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
+
 	<div class="container">
 		<% current_user.events.each do |event| %>
 			<% url = '/events/' + event.id.to_s %>

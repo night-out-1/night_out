@@ -10,6 +10,8 @@
 
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bungee+Inline" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
   </head>
 
   <body>
@@ -18,34 +20,34 @@
 
 
   <nav class="navbar navbar-default">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="/">NightOut<span class="glyphicon glyphicon-glass"></span></a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav navbar-right">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>                        
+        </button>
+        <a class="navbar-brand" href="/">NightOut<span class="glyphicon glyphicon-glass"></span></a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
 
-      <% if !current_user %>
-        <li class="dropdown"><a href="/">Home</a></li>
-        <li><a href="/users/sign_up">Sign Up</a></li>
-        <li><a href="/users/sign_in">Sign In</a></li>
+        <% if !current_user %>
+          <li class="dropdown"><a href="/">Home</a></li>
+          <li><a href="/users/sign_up">Sign Up</a></li>
+          <li><a href="/users/sign_in">Sign In</a></li>
 
-      <% else %>
-      
-        <li><a href="/profiles/<%=current_user.id.to_s%>">Profile</a></li>
-        <li><a href="/events">Events</a></li>
-        <li><a href="/users/edit">My Account</a></li>
-        <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
-        <% end %>
-      </ul>
+        <% else %>
+        
+          <li><a href="/profiles/<%=current_user.id.to_s%>">Profile</a></li>
+          <li><a href="/events">Events</a></li>
+          <li><a href="/users/edit">My Account</a></li>
+          <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+          <% end %>
+        </ul>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
 
 
@@ -57,19 +59,24 @@
 
 
 <!-- footer -->
-<div class="copyright navbar-fixed margin2">
-  <div class="container">
-    <div class="col-md-6">
-      <p>Night Out</p>
+<div class="filler"></div>
+    <div class="container-fluid footer-nav">
+      <div class="copyright navbar-fixed margin2">
+        <div class="container">
+          <div class="col-md-6">
+            <h3>Night Out</h3>
+          </div>
+          <div class="col-md-6">
+            <ul class="nav navbar-nav navbar-right">
+              <li><i class="fa fa-facebook-official" aria-hidden="true"></i></li>
+              <li><i class="fa fa-github" aria-hidden="true"></i></li>
+              <li><i class="fa fa-twitter-square" aria-hidden="true"></i></li>
+              <li><i class="fa fa-yelp" aria-hidden="true"></i></li>
+              <li><i class="fa fa-reddit-alien" aria-hidden="true"></i>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="col-md-6">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About us</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
   </body>
 </html>

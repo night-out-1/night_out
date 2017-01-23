@@ -1,92 +1,102 @@
 
-<div class="container">
 
 
 
-<!-- this first line of code is to send @array to JS so that the events close to the geolocation of the user device will be shown on the events page when going there from this view. bz-->
-<%if current_user %> <script> array = <%= @array %> </script> <%end%>
+				<!-- this first line of code is to send @array to JS so that the events close to the geolocation of the user device will be shown on the events page when going there from this view. bz-->
+				<%if current_user %> <script> array = <%= @array %> </script> <%end%>
 
-<div class="event-card">
-	<h2><%= @event.name %></h2>
-	<img src=<%=@event.location_photo_url%>>
-	<h3><%= @event.location_name %></h3>
-	<h4><%= @event.location_street_address%></h4>
-	<h4><%= @event.location_city%></h4>
-	<a href=<%=@event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a>
-	<h3>Time: <%= @event.time %></h3>
-	<p><%= @event.description %></p>
-</div>
+				
+			
+		<div class="container">
+			<div class="col-md-5">
+					<h2><%= @event.name %></h2>
+					<h3><%= @event.location_name %></h3>
+					<h4><%= @event.location_street_address%></h4>
+					<h4><%= @event.location_city%></h4>
+					<h4>Time: <%= @event.time %></h4>
 
-<% if @event.user_id == current_user.id || current_user.admin %>
-	<div>
-		<%= link_to "Edit Event", edit_event_path %>	
-	</div>
-	<div>
-		<%= link_to "Delete Event", @event, method: :delete, data: { confirm: "Are you sure?" } %>
-	</div>
-<% end %>
-
-
-<% if @event.users.exclude? current_user %>
-	<%= button_to "I wanna join this event!", action: "add_user_to_event", id: @event.id %>
-<% elsif @event.users.include? current_user %>
-	<%= button_to "I can't make it to this event anymore.", action: "remove_user_from_event", id: @event.id %>
-<% end %>
-
-
-<% if current_user.admin %>
-
-	<div class="notice"><%= flash[:notice] if flash[:notice] %></div>
-
-	<%= form_for(@event, url: events_admin_remove_user_from_event_path, method: :post) do |f| %>
-
-		<%= f.hidden_field :event_id, value: @event.id %>
-
-		<%= f.label :user, value: "User: " %><br>
-
-		<%= f.select(:user_id, options_from_collection_for_select(@event.users, :id, :username)) %>
-
-		<%= f.submit "Remove this user from the event.", {remote: true } %>
-
-	<% end %>
-<% end %>
-
-<div class="user-container">
-	<% if @event.users.length == 1 %>
-		<h4><%= @event.users.length %> person near you is attending this event!</h4>
-	<% else %>
-		<h4><%= @event.users.length %> people near you are attending this event!</h4>
-	<% end %>
-		<% @event.users.each do |user| %>
-			<div class="user-card">
-				<div class="avatar-small"><%= image_tag user.avatar.url :small %></div>
-				<p><%= user.username %></p>
-		<% end %>
-</div>
-
-<a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.referer %>" target="_blank" >
-  Share this event on Facebook
-</a>
-
-<div class="comment-container">
-	<% @event.comments.each do |comment| %>
-		<div class="comment-card">
-			<h4><a href="/comments/<%= comment.id %>"><%= comment.title %></a></h4>
-			<h5>Posted by: <%= (User.find_by id: comment.user_id).username %></h5>
-			<p><%= comment.content %></p>
-
-			<% if comment.user_id == current_user.id || current_user.admin %>
-				<div>
-					<%= link_to "Edit Comment", edit_comment_path(comment.id) %>
+				<% if @event.user_id == current_user.id || current_user.admin %>
+					<div>
+					<%= link_to "Edit Event", edit_event_path, :class => 'fa fa-edit' %>	
+					<%= link_to "Delete Event", @event, method: :delete, data: { confirm: "Are you sure?" }, :class => 'fa fa-remove' %>
+					<a href="https://www.facebook.com/sharer/sharer.php?u=<%= request.referer %>" target="_blank" >
+				 		<i class='fa fa-share'>Share this event on Facebook</i>
+					</a>
+				<% end %>
+					<img src=<%=@event.location_photo_url%> style='width:100%'>
+					<a href=<%=@event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a>
+					<p>Description:  <%= @event.description %></p>
+					<% if @event.users.exclude? current_user %>
+					<%= button_to "I wanna join this event!", action: "add_user_to_event", id: @event.id %>
+					<% elsif @event.users.include? current_user %>
+					<%= button_to "I can't make it to this event anymore.", action: "remove_user_from_event", id: @event.id %>
+				<% end %>
 				</div>
-				<div>
-					<%= link_to "Delete Comment", comment_path(comment.id), method: :delete, data: { confirm: "Are you sure?" } %>
+			</div>
+
+
+				<% if current_user.admin %>
+
+					<div class="notice"><%= flash[:notice] if flash[:notice] %></div>
+
+					<%= form_for(@event, url: events_admin_remove_user_from_event_path, method: :post) do |f| %>
+
+						<%= f.hidden_field :event_id, value: @event.id %>
+
+						<%= f.label :user, value: "User: " %><br>
+
+						<%= f.select(:user_id, options_from_collection_for_select(@event.users, :id, :username)) %>
+
+						<%= f.submit "Remove this user from the event.", {remote: true } %>
+
+					<% end %>
+				<% end %>
+
+
+				<div class="user">
+					<% if @event.users.length == 1 %>
+						<h4><%= @event.users.length %> person near you is attending this event!</h4>
+					<% else %>
+						<h4><%= @event.users.length %> people near you are attending this event!</h4>
+					<% end %>
+
+						<% @event.users.each do |user| %>
+								<div class="avatar-small"><%= image_tag user.avatar.url :small %></div>
+								<p><%= user.username %></p>
+						<% end %>
+					</div>
+
+				
+
+
+
+			
+				<div class="comment">
+					<% @event.comments.each do |comment| %>
+						<div class="comment-card">
+							<h4><a href="/comments/<%= comment.id %>"><%= comment.title %></a></h4>
+							<h5>Posted by: <%= (User.find_by id: comment.user_id).username %></h5>
+							<p><%= comment.content %></p>
+
+							<% if comment.user_id == current_user.id || current_user.admin %>
+								<div>
+									<%= link_to "Edit Comment", edit_comment_path(comment.id) %>
+								</div>
+								<div>
+									<%= link_to "Delete Comment", comment_path(comment.id), method: :delete, data: { confirm: "Are you sure?" } %>
+								</div>
+							<% end %>
+						</div>
+					</div>
+
+					<% end %>
+
+					<% if @event.users.include? current_user || current_user.admin %>
+						<%= render '/comments/create_new_comment' %>
+					<% end %>
 				</div>
-			<% end %>
+			</div>
 		</div>
-	<% end %>
-	<% if @event.users.include? current_user || current_user.admin %>
-		<%= render '/comments/create_new_comment' %>
-	<% end %>
-</div>
-</div>
+	</div>
+
+		

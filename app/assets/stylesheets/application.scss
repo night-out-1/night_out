@@ -15,9 +15,12 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "static_pages";
-
+@import "font-awesome";
 @import "profiles.scss";
 @import "events.scss";
+
+$title-font: Pacifico, cursive;
+$regular-font: Montserrat, sans-serif;
 
   body {
       font: 16px Montserrat, sans-serif;
@@ -37,13 +40,6 @@
 
   .margin1 {
   	margin-top: 60px;
-  }
-
-
-
-  .filler {
-  	background-color: #fff;
-  	height:400px;
   }
 
 
@@ -68,14 +64,20 @@
   }
   .navbar-nav  li a:hover {
       color: red !important;
+
   }
 
   .navbar-brand {
+
+      font-family: $title-font;
+      font-size: 22px;
+
+
   		.glyphicon {
   			color: red;
   		}
-
-  }
+  
+ }
 
   .main-content {
   	background-color: #fff;
@@ -98,12 +100,43 @@
   display: none;
 }
 
-.span {
-  color: red;
-}
+
 
 
 // footer
+
+.filler {
+    background-color: #fff;
+    height:150px;
+  }
+
+.footer-nav {
+  background-color: black;
+  color: white;
+  font-family: $title-font;
+  font-size: 26px;
+
+    a {
+      font-family: $regular-font;
+      color: #777;
+      font-size: 16px;
+
+    }
+
+    i {
+      font-size: 36px;
+      padding: 10px;
+    }
+
+    i:hover {
+      color: red;
+    }
+
+     .navbar-nav  li a:hover {
+      color: red !important;
+      background-color: black !important;
+  }
+}
 
 
  

@@ -36,6 +36,8 @@ gem 'bootstrap-sass'
 
 gem 'paperclip'
 
+gem 'font-awesome-rails'
+
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
