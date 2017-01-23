@@ -1,33 +1,45 @@
 <!-- this first line of code is to send @array to JS so that the events close to the geolocation of the user device will be shown on the events page when going there from this view. bz-->
 <%if current_user %> <script> array = <%= @array %> </script> <%end%>
-<div class="container">
-	<div class="row">
-		<div class="col-md-4">
-			<div class="user-image">
-				<%= image_tag @user.avatar.url :medium, :class => 'img-responsive' %>
-			</div>
-		</div>
-			
-		<div class="col-md-8">
-			<div class="profile">
-				<h1>Events</h1>
 
-				<% current_user.events.each do |event| %>
-					<% url = '/events/' + event.id.to_s %>
-					<%= link_to url do %>
-				 		<%= event.name %><br>
-			 		<% end %>
-				 	<%= event.description%><br>
-				 	<%= event.location_name %><br>
-				 	<img src=<%= event.location_photo_url%>><br>
-				 	<a href=<%=event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a><br>
-				 <% end %>
+	<style>
+			.profile-container {
+				background-image: url(<%= @user.avatar.url %>);
+				color: white;
+			};
+	</style>
+
+	<div class="container-fluid profile-container">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<%= image_tag @user.avatar.url :medium, :class => 'img-responsive' %>
+				</div>
+				<div class="col-md-4">
+					<h2>Hey <%= current_user.username %></h2>
+				</div>
 			</div>
 		</div>
 	</div>
-	<%= link_to "Admin Review Comments", comments_path %>	
-</div>
 
+	<div class="container">
+		<% current_user.events.each do |event| %>
+			<% url = '/events/' + event.id.to_s %>
+			  <div class="col-md-4">
+			    <div class="thumbnail">
+			      <img src=<%= event.location_photo_url%> style='width:100%'>
+			      <a href=<%=event.location_url%>><img class="yelp-logo" src="/Yelp_trademark_RGB_outline.png"></a>
 
-
-
+			      <div class="caption">
+			        <h3><%= event.name %></h3>
+			        <p><%= event.description %></p>
+			        <%= link_to url do %>
+			        <p><button class="btn btn-primary" role="button">Check It Out</button></p>
+			        <% end %>
+			      </div>
+			    </div>
+			  </div>
+			<% end %>
+		<% if current_user.admin %>
+			<%= link_to "Admin Review Comments", comments_path %>
+		<% end %>
+	</div>

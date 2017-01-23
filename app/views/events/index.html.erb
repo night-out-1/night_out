@@ -5,23 +5,36 @@
 	<script> getLatLong() </script>
 <% end %>
 <!--end script, begin html-->
+<div class="container-fluid search-container">
+	<div class="container event-container">
+		<center><h2>CHANGE YOUR <span>LOCATION</span></h2></center>
+			<div class="col-md-6 col-md-offset-3">
+				<%=form_tag "/events/search" do %>
+					
 
-<div class="container event-container">
-	<h2>CHANGE YOUR LOCATION</h2>
-	<%=form_tag "/events/search" do %>
-		<%=label_tag (:location)%>
-		<%=text_field_tag (:location)%>
-		<%=submit_tag ("search")%>
-	<% end %>
+					<%=text_field_tag :location, nil, :class => 'form-control'%>
+						<br />
+					<center>
+						<%=submit_tag "search", :class => 'btn btn-danger'%>
+						
+					</center>
+						</div>
+					</div>
+				</div>
+				<% end %>
 	<%= @city%>
-	<h2> MAKE A NEW EVENT </h2>
+
+	<div class="container-fluid event-show">
+		<div class="container">
+			<h2> MAKE A NEW EVENT <%= @location_responses %> </h2>
 	<!-- the below line defines a variable @city within the page that is used later in deciding which events to show. bz -->
-	<% @city = nil %>
+				<% @city = nil %>
 	<!-- the below if else statement will show locations based on the home zip code of the user plugged into yelp unless the search bar has been enabled, and it will then show results from that search plugged into yelp. bz-->
 	<% if @location_responses %>
 		<% for i in (0..5)%>
-			<div>
-				<img src=<%=@location_responses.businesses[i].image_url%>></br>
+		<div class="col-md-4">
+			<div class="thumbnail">
+				<img src=<%=@location_responses.businesses[i].image_url%> style='width:100%'></br>
 				<%= @location_responses.businesses[i].name %></br>
 			</div>
 			<div>
@@ -34,19 +47,23 @@
 					<%= hidden_field_tag(:location_postal_code, @location_responses.businesses[i].location.postal_code)%>
 					<%= hidden_field_tag(:location_latitude, @location_responses.businesses[i].location.coordinate.latitude)%>
 					<%= hidden_field_tag(:location_longitude, @location_responses.businesses[i].location.coordinate.longitude)%>
-					<%= submit_tag "Create Event" %>
+					<%= submit_tag "Go Here!", :class => 'btn btn-danger' %>
 				<% end %>
+				</div>
 			</div>
 		<% end %>
+
 		<!--the below line defines @city as the city of the first location brought back by yelp. this is used later to decide which events to show.  this only happens if the search function has been enabled, which is why it is located in this if statement. bz -->
 		<% @city = @location_responses.businesses[0].location.city %>
 		<!-- the below script changes a JS boolean so that a certain function will run. bz -->
 		<script> enabled = true</script>
 	<% else %>
 		<% for i in (0..5)%>
-			<div>
-				<img src=<%=@base_locations.businesses[i].image_url%>></br>
+		<div class="col-md-4">
+			<div class="thumbnail">
+				<img src=<%=@base_locations.businesses[i].image_url%> style="width:100%"></br>
 				<%= @base_locations.businesses[i].name %></br>
+
 			</div>
 			<div>
 				<%= form_tag '/events/new' do%>
@@ -56,12 +73,16 @@
 				<%= hidden_field_tag(:location_street_address, @base_locations.businesses[i].location.address)%>
 				<%= hidden_field_tag(:location_city, @base_locations.businesses[i].location.city)%>
 				<%= hidden_field_tag(:location_postal_code, @base_locations.businesses[i].location.postal_code)%>
-				<%= submit_tag "Create Event" %>
+				<%= submit_tag "Go Here!", :class => 'btn btn-danger' %>
+				
 			<% end %>
 		</div>
+	</div>
 		<% end %>
 	<% end %>
-	<h2>EVENTS HAPPENING</h2>
+
+	<div class="container events-happening">
+	<h2>Hold it, There are events going on in this area!</h2>
 	<!-- the below if statement makes cards for each of the events that are hidden.  If geolocation is enabled, the events with nearby latitude and longitude to the location of the device will have their display:hidden class removed by calling them with their id (both css id and ruby id). bz-->
 	<% if @events %>
 		<% @events.each do |event| %>
@@ -73,6 +94,7 @@
 			</div>
 		<% end %>
 	<% end %>
+</div>
 <!-- the below if, elsif, else statement determines which events show up on the page. this code will make event cards for the events with zip codes close to the users home zip code.  these event cards will be hidden unless geolocation is disabled. the lack of geolocation will cause JS to remove the event cards display:hidden class through the getLatLong function. 
 these event cards will be displayed on the page unless the search bar is activated.  
 the elsif section of this code will show the events with a zip code close to the searched zip code (if the search is a zip code).  
@@ -116,6 +138,8 @@ the if section of this code will use the @city variable defined earlier in this 
 	<% end %>
 </div>
 
+</div>
+	</div>
 
 
 

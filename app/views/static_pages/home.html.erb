@@ -1,14 +1,14 @@
 <!-- this first line of code is to send @array to JS so that the events close to the geolocation of the user device will be shown on the events page when going there from this view. bz-->
-<%if current_user %> <script> array = <%= @array %> </script> <%end%>
+<%if current_user %> <script> array = <%= @array %> </script> <% end %>
 <!-- jumbotron  -->
 
 	<div class="container-fluid bg-1 text-left">
 	<div class="jumbotron">
-	    <h1 class="text-center">What are you doing tonight?</h1>
+	    <h1 class="text-center">What are you doing <span>tonight?</span></h1>
 	    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A magnam pariatur, sapiente voluptate laboriosam accusantium totam in dolor mollitia quam facere libero eligendi non accusamus porro quod laborum, rem necessitatibus!</p> 
 	    <center>
 	    <a href="/users/sign_up" class="btn btn-default btn-lg">
-	     <span class="glyphicon glyphicon-glass text-center"></span> Get Started</a>
+	     <h5 class="glyphicon glyphicon-glass text-center"></h5> Get Started</a>
 	     <br>
 	     <h1 class="glyphicon glyphicon-menu-down"></h1>
 	     </center>
@@ -60,6 +60,23 @@
 
 <!-- content 3 -->
 
+	<div class="container-fluid bg-3 text-center"> 
+		<div class="container">  
+	  <div class="row">
+	    <div class="col-md-6 text-left"> 
+	    <h1>Check out those glasses!</h1>
+	      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
+	     </div>
+
+
+	    <div class="col-md-6">
+	      <h1>NYCDA</h1>
+	      <img src="assets/philly.jpg" class="img-responsive margin" style="width:100%" alt="party">
+	    </div>
+	    </div>
+
+	  </div>
+	</div>
 
 
 

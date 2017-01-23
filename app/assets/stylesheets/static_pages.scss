@@ -1,17 +1,21 @@
 // Place all the styles related to the StaticPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
+$title-font: Pacifico, cursive;
 
   .jumbotron {
     background: none;
     margin-top: 50px;
+
+    span {
+      font-family: $title-font;
+      
+    }
   }
 
   .fadeIn {
   	opacity: 0;
   }
-
 
 
   .bg-1 { 
