@@ -29,21 +29,21 @@ event1 = Event.create(name: "Let's Get a Drink!", time: "9pm", description: "It'
  event3.users.push(user2)
  event3.users.push(user4)
 
- comment1 = Comment.create(user_id: 1, event_id: 1, title: "Time Flexible", content: "If you want to do it a little later that works, too.")
+ comment1 = Comment.create(user_id: 1, event_id: 1, title: "Time Flexible", content: "If you want to do it a little later that works, too.", flagged: false)
 
- comment2 = Comment.create(user_id: 1, event_id: 2, title: "Ask for Susan", content: "When you get here, ask to be seated at the party in Susan's section.")
+ comment2 = Comment.create(user_id: 1, event_id: 2, title: "Ask for Susan", content: "When you get here, ask to be seated at the party in Susan's section.", flagged: false)
 
- comment3 = Comment.create(user_id: 2, event_id: 2, title: "Update", content: "...more specifically, if you ask the hostess upstairs to sit in the party in Susan's section, it will be easier to find us.")
+ comment3 = Comment.create(user_id: 2, event_id: 2, title: "Update", content: "...more specifically, if you ask the hostess upstairs to sit in the party in Susan's section, it will be easier to find us.", flagged: false)
 
- comment4 = Comment.create(user_id: 1, event_id: 3, title: "Timing", content: "I am planning on getting there at 5:30 right after work.")
+ comment4 = Comment.create(user_id: 1, event_id: 3, title: "Timing", content: "I am planning on getting there at 5:30 right after work.", flagged: false)
 
- comment5 = Comment.create(user_id: 2, event_id: 3, title: "Re: Timing", content: "Would you like me to change the time of the event so others may show up earlier?")
+ comment5 = Comment.create(user_id: 2, event_id: 3, title: "Re: Timing", content: "Would you like me to change the time of the event so others may show up earlier?", flagged: false)
 
- comment6 = Comment.create(user_id: 1, event_id: 3, title: "Re: Timing", content: "Yeah, that would be great because I will definitely be there at 530.")
+ comment6 = Comment.create(user_id: 1, event_id: 3, title: "Re: Timing", content: "Yeah, that would be great because I will definitely be there at 530.", flagged: false)
 
- comment7 = Comment.create(user_id: 4, event_id: 3, title: "I HAET YOU", content: "AND I HAET THIS EVENT")
+ comment7 = Comment.create(user_id: 4, event_id: 3, title: "I HAET YOU", content: "AND I HAET THIS EVENT", flagged: false)
 
- comment8 = Comment.create(user_id: 4, event_id: 2, title: "YORE THE WORST", content: "WHY ARE YOU TERRIBLE NO ONE LIKES YOU")
+ comment8 = Comment.create(user_id: 4, event_id: 2, title: "YORE THE WORST", content: "WHY ARE YOU TERRIBLE NO ONE LIKES YOU", flagged: false)
 
   
 

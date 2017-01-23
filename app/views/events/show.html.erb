@@ -69,7 +69,16 @@
 		<div class="comment-card">
 			<h4><%= comment.title %></h4>
 			<h5>Posted by: <%= (User.find_by id: comment.user_id).username %></h5>
+			<% if comment.flagged %>
+				<div class="flag">&#127987; This comment has been flagged for removal.</div>
+			<% end %>
 			<p><%= comment.content %></p>
+			<% if !comment.flagged %>
+				<%= button_to "Flag this comment", action: "flag_comment", controller: "comments", id: comment.id %>
+			<% end %>
+			<% if comment.flagged && current_user.admin %>
+				<%= button_to "Unflag this comment", action: "admin_unflag_comment", controller: "comments", id: comment.id %>
+			<% end %>
 
 			<% if comment.user_id == current_user.id || current_user.admin %>
 				<div>

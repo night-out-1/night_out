@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
 
-	before_action :set_comment, only: [:show, :edit, :update, :destroy]
+	before_action :set_comment, only: [:show, :edit, :update, :destroy, :flag_comment, :admin_unflag_comment]
   before_action :authenticate_user!, :except => [:index]
 
 	def index
@@ -33,6 +33,18 @@ class CommentsController < ApplicationController
 
 	def destroy
 		@comment.destroy
+		redirect_to event_path(@comment.event)
+	end
+
+	def flag_comment
+		@comment.flagged = true
+		@comment.save
+		redirect_to event_path(@comment.event)
+	end
+
+	def admin_unflag_comment
+		@comment.flagged = false
+		@comment.save
 		redirect_to event_path(@comment.event)
 	end
 
